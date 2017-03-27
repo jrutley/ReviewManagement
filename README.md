@@ -18,6 +18,7 @@ dotnet run
 
 Add tests on front end
 Add tests on back end
+Wire up something on the front end to call the CustomerReviewController
 Add Customer ability to add a review to a product
 Add Vendor ability to retrieve reviews
 Add Vendor ability to sort reviews
