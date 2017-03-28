@@ -4,11 +4,16 @@ This application allows a vendor to manage reviews for their products. It is not
 
 Commands to get up and running:
 
+If running from the console, run 
+
+npm install
+
+webpack --config webpack.config.vendor.js
+
 dotnet restore
 
 dotnet ef database update
 
-If running from the console, run npm install
 Set mode to Development by setting the environment variable ASPNETCORE_ENVIRONMENT=Development
 
 The following command will start the website:
