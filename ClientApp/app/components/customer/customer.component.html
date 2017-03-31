@@ -5,12 +5,12 @@
 <p>Current count: <strong>{{ currentCount }}</strong></p>
 <button (click)="incrementCounter()">Increment</button>
 
-<input [(ngModel)]="name" placeholder="Name">
+<input class="customer-name" [(ngModel)]="name" (change)="updateProducts()" placeholder="Name">
 <input [(ngModel)]="email" placeholder="Email address">
 
-<div *ngIf="name">
-    <div>Hello {{name}}, select a product to review:</div>
-    <ul>
-        <li *ngFor="let product of products" class="customer-product">{{product}}</li>
-    </ul>
-</div>
+<!--<div *ngIf="name">-->
+<div>Hello {{name}}, select a product to review:</div>
+<ul>
+    <li *ngFor="let product of products" class="customer-product">{{product}}</li>
+</ul>
+<!--</div>-->

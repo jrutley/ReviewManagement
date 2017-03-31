@@ -5,23 +5,14 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ProductViewModel } from './product.viewmodel.component';
 import { By } from '@angular/platform-browser';
-
-const PRODUCTS = [
-    {name: "Luke's lightsaber"},
-    {name: "Leia's hair earmuffs"},
-];
+import { CustomerProductService } from '../../services/customer-product.service';
+import {PRODUCTS} from '../../services/product.mock';
 
 class MockCustomerProductService {
     public myProducts: ProductViewModel[] = PRODUCTS
     getProducts(): Promise<ProductViewModel[]> {
+        console.log("MOCK PRODUCT SERVICE");
         return Promise.resolve(PRODUCTS);
-    }
-}
-
-class CustomerProductService {
-    getProducts():Promise<ProductViewModel[]>{
-        throw Error("Not implemented yet");
-        //return Promise.resolve(PRODUCTS);
     }
 }
 
@@ -46,15 +37,28 @@ describe('Customer component', () => {
     it('after email is entered, display purchased products', async(() => {
 
         // Add entered email
+        const nameInput = fixture.debugElement.query(By.css('input'));
+        let el = nameInput.nativeElement;
+        el.value = 'me@email.com';
+        el.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
 
         // Debounce???
         // Call the service
-        fixture.componentInstance.getProducts();
         // Filter on products previously purchased
         // Return the products
         fixture.whenStable().then(()=>{
-            const products = fixture.debugElement.queryAll(By.css('customer-product'));
-            expect(products.length).toBeGreaterThan(0); // FAILS
+            fixture.componentInstance.getProducts();
+            fixture.detectChanges();
+            fixture.whenStable().then(()=>{
+                console.log("PRoducts:");
+                console.log(fixture.componentInstance.products);
+                console.log(fixture.debugElement);
+                const products = fixture.debugElement.queryAll(By.css('customer-product'));
+                console.log(products);
+                //const products = fixture.debugElement.queryAll(By.css('li'));
+                expect(products.length).toBeGreaterThan(0);
+            });
         });
     }));
 
