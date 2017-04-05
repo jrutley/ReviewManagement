@@ -1,31 +1,45 @@
 /// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
 import { assert } from 'chai';
 import { CustomerComponent } from './customer.component';
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ProductViewModel } from './product.viewmodel.component';
 import { By } from '@angular/platform-browser';
 import { CustomerProductService } from '../../services/customer-product.service';
-import {PRODUCTS} from '../../services/product.mock';
+import { PRODUCTS } from '../../services/product.mock';
+import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
+import { DebugElement } from '@angular/core';
 
 class MockCustomerProductService {
     public myProducts: ProductViewModel[] = PRODUCTS
-    getProducts(): Promise<ProductViewModel[]> {
+    getProducts(st: string): Promise<ProductViewModel[]> {
         console.log("MOCK PRODUCT SERVICE");
         return Promise.resolve(PRODUCTS);
     }
 }
 
-let fixture: ComponentFixture<CustomerComponent>;
-
 describe('Customer component', () => {
+    let fixture: ComponentFixture<CustomerComponent>;
+    let comp: CustomerComponent;
+    let de: DebugElement;
+    let el: HTMLInputElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                CustomerComponent
+            ],
+            imports: [
+                FormsModule
+            ],
+            providers: [
+                { provide: CustomerProductService, useClass: MockCustomerProductService }
+            ]
+        }).compileComponents();
+    }));
     beforeEach(() => {
-        TestBed.configureTestingModule({ 
-            declarations: [CustomerComponent], 
-            imports: [FormsModule],
-            providers: [{provide: CustomerProductService, useClass: MockCustomerProductService}]
-        });
         fixture = TestBed.createComponent(CustomerComponent);
+        comp = fixture.componentInstance;
         fixture.detectChanges();
     });
 
@@ -34,32 +48,37 @@ describe('Customer component', () => {
         expect(titleText).toEqual('Customer');
     }));
 
-    it('after email is entered, display purchased products', async(() => {
+    it('after email is entered, display purchased products', fakeAsync(() => {
 
         // Add entered email
-        const nameInput = fixture.debugElement.query(By.css('input'));
-        let el = nameInput.nativeElement;
+        de = fixture.debugElement.query(By.css('input'));
+
+        el = de.nativeElement;
         el.value = 'me@email.com';
-        el.dispatchEvent(new Event('input'));
+        dispatchEvent(el, 'change');
         fixture.detectChanges();
 
+        console.log("El value");
+        console.log(el.value);
+        console.log("End of el value")
         // Debounce???
         // Call the service
         // Filter on products previously purchased
         // Return the products
-        fixture.whenStable().then(()=>{
-            fixture.componentInstance.getProducts();
-            fixture.detectChanges();
-            fixture.whenStable().then(()=>{
-                console.log("PRoducts:");
-                console.log(fixture.componentInstance.products);
-                console.log(fixture.debugElement);
-                const products = fixture.debugElement.queryAll(By.css('customer-product'));
-                console.log(products);
-                //const products = fixture.debugElement.queryAll(By.css('li'));
-                expect(products.length).toBeGreaterThan(0);
-            });
-        });
+
+        comp.getProducts();
+        dispatchEvent(el, 'change');
+        dispatchEvent(el, 'blur');
+        fixture.detectChanges();
+        tick();
+
+        console.log("Products:");
+        console.log(comp.products);
+        console.log(fixture.debugElement);
+        // const products = fixture.debugElement.queryAll(By.css('.customer-product'));
+        const products = fixture.debugElement.queryAll(By.css('li'));
+        console.log(products);
+        expect(products.length).toBeGreaterThan(0);
     }));
 
     // it('should start with count 0, then increments by 1 when clicked', async(() => {
