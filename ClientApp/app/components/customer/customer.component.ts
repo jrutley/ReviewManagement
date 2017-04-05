@@ -11,7 +11,7 @@ import { CustomerProductService } from '../../services/customer-product.service'
 export class CustomerComponent {
     public name: string;
     public email: string;
-    public products: ProductViewModel[];
+    public products: ProductViewModel;
 
     constructor(private productService: CustomerProductService) { }
 
@@ -21,7 +21,7 @@ export class CustomerComponent {
     }
 
     public getProducts() {
-        this.productService.getProducts("ME").then(p => {
+        return this.productService.getProducts("CHANGEME").then(p => {
             this.products = p;
             console.log("GOT PRODUCT");
             console.log(this.products);

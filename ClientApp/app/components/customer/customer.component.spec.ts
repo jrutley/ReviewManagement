@@ -6,15 +6,14 @@ import { FormsModule } from '@angular/forms';
 import { ProductViewModel } from './product.viewmodel.component';
 import { By } from '@angular/platform-browser';
 import { CustomerProductService } from '../../services/customer-product.service';
-import { PRODUCTS } from '../../services/product.mock';
 import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import { DebugElement } from '@angular/core';
 
 class MockCustomerProductService {
-    public myProducts: ProductViewModel[] = PRODUCTS
-    getProducts(st: string): Promise<ProductViewModel[]> {
+    getProducts(st: string): Promise<ProductViewModel> {
         console.log("MOCK PRODUCT SERVICE");
-        return Promise.resolve(PRODUCTS);
+        const mockProduct = { products: ["Mock 1", "Mock 2"] };
+        return Promise.resolve(mockProduct);
     }
 }
 
@@ -46,6 +45,12 @@ describe('Customer component', () => {
     it('should display a title', async(() => {
         const titleText = fixture.nativeElement.querySelector('h1').textContent;
         expect(titleText).toEqual('Customer');
+    }));
+
+    it('should use the mocked service', async(() => {
+        comp.getProducts().then(p => {
+            expect(p.products).toContain("Mock 1");
+        });
     }));
 
     it('after email is entered, display purchased products', fakeAsync(() => {

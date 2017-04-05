@@ -1,3 +1,3 @@
 export class ProductViewModel {
-    name: string;
+    products: string[];
 }

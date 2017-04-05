@@ -1,6 +1,3 @@
 import { Product } from './product'
 
-export const PRODUCTS = [
-    {name: "Luke's lightsaber"},
-    {name: "Leia's hair earmuffs"},
-];
+export const PRODUCTS = { products: ["Luke's lightsaber", "Leia's hair earmuffs"] };
