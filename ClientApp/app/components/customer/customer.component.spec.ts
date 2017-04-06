@@ -1,5 +1,4 @@
 /// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
-import { assert } from 'chai';
 import { CustomerComponent } from './customer.component';
 import { TestBed, async, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -30,11 +29,16 @@ describe('Customer component', () => {
             ],
             imports: [
                 FormsModule
-            ],
-            providers: [
-                { provide: CustomerProductService, useClass: MockCustomerProductService }
             ]
-        }).compileComponents();
+        })
+            // Override component's own provider
+            .overrideComponent(CustomerComponent, {
+                set: {
+                    providers: [
+                        { provide: CustomerProductService, useClass: MockCustomerProductService }
+                    ]
+                }
+            });
     }));
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomerComponent);
@@ -49,7 +53,8 @@ describe('Customer component', () => {
 
     it('should use the mocked service', async(() => {
         comp.getProducts().then(p => {
-            expect(p.products).toContain("Mock 1");
+            //expect(p.products).toContain("Mock 1");
+            expect(p).toContain("Mock 1");
         });
     }));
 
@@ -76,6 +81,7 @@ describe('Customer component', () => {
         dispatchEvent(el, 'blur');
         fixture.detectChanges();
         tick();
+        fixture.detectChanges();
 
         console.log("Products:");
         console.log(comp.products);

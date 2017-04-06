@@ -1,3 +1,3 @@
 export class ProductViewModel {
-    products: string[];
+    constructor(public products: string[]) { };
 }

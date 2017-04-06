@@ -7,10 +7,13 @@
 
 <input class="customer-name" [(ngModel)]="name" (change)="updateProducts()" placeholder="Name">
 <input [(ngModel)]="email" placeholder="Email address">
-
+<div>Testing</div>
 <!--<div *ngIf="name">-->
 <div>Hello {{name}}, select a product to review:</div>
+<div>ProductVM:</div>
+<div>productViewModel.products</div>
+UL:
 <ul>
-    <li *ngFor="let product of products" class="customer-product">{{product}}</li>
+  <li *ngFor="let product of products" class="customer-product">{{product}}</li>
 </ul>
 <!--</div>-->
