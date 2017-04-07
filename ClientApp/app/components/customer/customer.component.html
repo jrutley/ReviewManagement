@@ -10,10 +10,7 @@
 <div>Testing</div>
 <!--<div *ngIf="name">-->
 <div>Hello {{name}}, select a product to review:</div>
-<div>ProductVM:</div>
-<div>productViewModel.products</div>
-UL:
-<ul>
-  <li *ngFor="let product of products" class="customer-product">{{product}}</li>
+<ul *ngIf="productViewModel">
+  <li *ngFor="let product of productViewModel.products" class="customer-product">{{product}}</li>
 </ul>
 <!--</div>-->
