@@ -76,6 +76,8 @@ describe('Customer component', () => {
         // Filter on products previously purchased
         // Return the products
 
+        comp.name = "Hi";
+
         comp.getProducts();
         dispatchEvent(el, 'change');
         dispatchEvent(el, 'blur');
