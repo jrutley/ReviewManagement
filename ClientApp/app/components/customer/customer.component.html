@@ -2,10 +2,7 @@
 
 <p>Yes, there is no security on this whatsoever</p>
 
-<p>Current count: <strong>{{ currentCount }}</strong></p>
-<button (click)="incrementCounter()">Increment</button>
-
-<input class="customer-name" [(ngModel)]="name" (change)="updateProducts()" placeholder="Name">
+<input class="customer-name" [(ngModel)]="name" (input)="updateProducts()" placeholder="Name">
 <input [(ngModel)]="email" placeholder="Email address">
 <div *ngIf="name">
   <div>Hello {{name}}, select a product to review:</div>

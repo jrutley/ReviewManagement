@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { ProductViewModel } from './product.viewmodel.component';
 import { By } from '@angular/platform-browser';
 import { CustomerProductService } from '../../services/customer-product.service';
-import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import { DebugElement } from '@angular/core';
 
 class MockCustomerProductService {
@@ -53,42 +52,31 @@ describe('Customer component', () => {
 
     it('should use the mocked service', async(() => {
         comp.getProducts().then(p => {
-            //expect(p.products).toContain("Mock 1");
             expect(p).toContain("Mock 1");
         });
     }));
 
-    it('after email is entered, display purchased products', fakeAsync(() => {
+    it('should bind the input to the correct property', () => {
+        let input = fixture.debugElement.query(By.css('input'));
+        let inputElement = input.nativeElement;
+
+        //set input value
+        inputElement.value = 'test value';
+        inputElement.dispatchEvent(new Event('input'));
+
+        expect(fixture.componentInstance.name).toBe('test value'); // Test [(ngModel)]="name"
+    });
+
+    it('should display purchased products after name is entered', fakeAsync(() => {
 
         // Add entered email
         de = fixture.debugElement.query(By.css('input'));
-
         el = de.nativeElement;
-        el.value = 'me@email.com';
-        dispatchEvent(el, 'change');
-        fixture.detectChanges();
-
-        console.log("El value");
-        console.log(el.value);
-        console.log("End of el value")
-        // Debounce???
-        // Call the service
-        // Filter on products previously purchased
-        // Return the products
-
-        comp.name = "Hi";
-
-        comp.getProducts();
-        dispatchEvent(el, 'change');
-        dispatchEvent(el, 'blur');
-        fixture.detectChanges();
+        el.value = "Hi";
+        el.dispatchEvent(new Event('input'));
         tick();
         fixture.detectChanges();
 
-        console.log("Products:");
-        console.log(comp.products);
-        console.log(fixture.debugElement);
-        // const products = fixture.debugElement.queryAll(By.css('.customer-product'));
         const products = fixture.debugElement.queryAll(By.css('li'));
         console.log(products);
         expect(products.length).toBeGreaterThan(0);
