@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CustomerProductService {
-    private productUrl = '/api/products';
+    private productUrl = '/api/CustomerReview/MyProductsAndReviews';
 
     constructor(private http: Http) { }
 
