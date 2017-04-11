@@ -17,7 +17,6 @@ export class CustomerComponent {
     constructor(private productService: CustomerProductService) { }
 
     public updateProducts() {
-        console.log("UPDATE PRODUCTS");
         this.getProducts();
     }
 
@@ -25,8 +24,8 @@ export class CustomerComponent {
         return this.productService.getProducts(this.email).then(p => {
             this.productViewModel = p;
             this.products = p.data;
-            console.log("GOT PRODUCT");
-            console.log(this.products);
+            //console.log("GOT PRODUCT");
+            //console.log(this.products);
             return this.products;
         });
     }

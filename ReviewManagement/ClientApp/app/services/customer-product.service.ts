@@ -19,7 +19,7 @@ export class CustomerProductService {
     }
 
     private extractData(res: Response): ProductViewModel {
-        let body = res.json();
+        let body = res.json().data;
         let viewModel = new ProductViewModel(body.map(p => p.product.name));
         return viewModel || { data: [] };
     }

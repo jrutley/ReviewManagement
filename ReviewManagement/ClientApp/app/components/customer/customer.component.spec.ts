@@ -82,4 +82,19 @@ describe('Customer component', () => {
         expect(products.length).toBeGreaterThan(0);
         expect(products[0].nativeElement.textContent).toBe('Mock 1');
     }));
+
+    it('should display the customer\'s existing reviews for that after email is entered', fakeAsync(() => {
+
+        // Add entered email
+        de = fixture.debugElement.query(By.css('input'));
+        el = de.nativeElement;
+        el.value = "Hi";
+        el.dispatchEvent(new Event('input'));
+        tick();
+        fixture.detectChanges();
+
+        const products = fixture.debugElement.queryAll(By.css('li'));
+        expect(products.length).toBeGreaterThan(0);
+        expect(products[0].nativeElement.textContent).toBe('Mock 1');
+    }));
 });
