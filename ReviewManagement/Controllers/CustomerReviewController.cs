@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ReviewManagement.Controllers.ViewModels;
 using ReviewManagement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ReviewManagement.Controllers
 {
@@ -20,9 +20,16 @@ namespace ReviewManagement.Controllers
     [HttpGet("[action]")]
     public IActionResult MyProductsAndReviews([FromQuery] string email) // Don't do this in a real app!
     {
-      var customer = _customerDb.Customers.SingleOrDefault(c => c.Email == email);
+            var customer = _customerDb.Customers
+                          .Include(c => c.Products)
+                          .ThenInclude(cp => cp.Product)
+                          .ThenInclude(p => p.Reviews)
+                    .SingleOrDefault(c => c.Email == email);
       if (customer == null) return Ok(new List<CustomerViewDTO>());
-      var productMapping = customer.Products.Select(p => { return new CustomerViewDTO { Product = p.Product, Review = p.Product.Reviews.SingleOrDefault(r => r.CustomerId == customer.CustomerId) }; }).ToList();
+      var productMapping = customer
+                .Products
+                .Select(cp=>cp.Product)
+                .Select(product => { return new CustomerViewDTO { Product = product, Review = product.Reviews.SingleOrDefault(r => r.CustomerId == customer.CustomerId) }; }).ToList();
       return Ok(productMapping);
     }
   }

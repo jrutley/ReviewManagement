@@ -1,16 +1,17 @@
 /// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
-import { CustomerComponent } from './customer.component';
 import { TestBed, async, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { ProductViewModel } from './product.viewmodel.component';
-import { By } from '@angular/platform-browser';
-import { CustomerProductService } from '../../services/customer-product.service';
 import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+
+import { CustomerComponent } from './customer.component';
+import { ProductViewModel } from './product.viewmodel.component';
+import { CustomerProductService } from '../../services/customer-product.service';
 
 class MockCustomerProductService {
     getProducts(st: string): Promise<ProductViewModel> {
         console.log("MOCK PRODUCT SERVICE");
-        const mockProduct = { products: ["Mock 1", "Mock 2"] };
+        const mockProduct = { data: ["Mock 1", "Mock 2"] };
         return Promise.resolve(mockProduct);
     }
 }
@@ -64,10 +65,10 @@ describe('Customer component', () => {
         inputElement.value = 'test value';
         inputElement.dispatchEvent(new Event('input'));
 
-        expect(fixture.componentInstance.name).toBe('test value'); // Test [(ngModel)]="name"
+        expect(fixture.componentInstance.email).toBe('test value');
     });
 
-    it('should display purchased products after name is entered', fakeAsync(() => {
+    it('should display purchased products after email is entered', fakeAsync(() => {
 
         // Add entered email
         de = fixture.debugElement.query(By.css('input'));
@@ -78,17 +79,7 @@ describe('Customer component', () => {
         fixture.detectChanges();
 
         const products = fixture.debugElement.queryAll(By.css('li'));
-        console.log(products);
         expect(products.length).toBeGreaterThan(0);
+        expect(products[0].nativeElement.textContent).toBe('Mock 1');
     }));
-
-    // it('should start with count 0, then increments by 1 when clicked', async(() => {
-    //     const countElement = fixture.nativeElement.querySelector('strong');
-    //     expect(countElement.textContent).toEqual('0');
-
-    //     const incrementButton = fixture.nativeElement.querySelector('button');
-    //     incrementButton.click();
-    //     fixture.detectChanges();
-    //     expect(countElement.textContent).toEqual('1');
-    // }));
 });

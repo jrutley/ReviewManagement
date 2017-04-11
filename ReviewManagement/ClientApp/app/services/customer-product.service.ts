@@ -19,12 +19,9 @@ export class CustomerProductService {
     }
 
     private extractData(res: Response): ProductViewModel {
-        console.log('successfully extracted')
-        console.log(res);
         let body = res.json();
-        let viewModel = new ProductViewModel(body.data.map(p => p.name));
-        console.log(viewModel);
-        return viewModel || { products: [] };
+        let viewModel = new ProductViewModel(body.map(p => p.product.name));
+        return viewModel || { data: [] };
     }
 
     private handleError(error: Response | any) {

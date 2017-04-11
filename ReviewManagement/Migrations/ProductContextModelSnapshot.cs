@@ -17,7 +17,7 @@ namespace ReviewManagement.Migrations
 
             modelBuilder.Entity("ReviewManagement.Models.Customer", b =>
                 {
-                    b.Property<Guid>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email");
@@ -31,9 +31,9 @@ namespace ReviewManagement.Migrations
 
             modelBuilder.Entity("ReviewManagement.Models.CustomerProduct", b =>
                 {
-                    b.Property<Guid>("CustomerId");
+                    b.Property<int>("CustomerId");
 
-                    b.Property<Guid>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.HasKey("CustomerId", "ProductId");
 
@@ -44,7 +44,7 @@ namespace ReviewManagement.Migrations
 
             modelBuilder.Entity("ReviewManagement.Models.Product", b =>
                 {
-                    b.Property<Guid>("ProductId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
@@ -58,14 +58,14 @@ namespace ReviewManagement.Migrations
 
             modelBuilder.Entity("ReviewManagement.Models.Review", b =>
                 {
-                    b.Property<Guid>("ReviewId")
+                    b.Property<int>("ReviewId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Comments");
 
-                    b.Property<Guid>("CustomerId");
+                    b.Property<int>("CustomerId");
 
-                    b.Property<Guid?>("ProductId");
+                    b.Property<int?>("ProductId");
 
                     b.Property<int>("Stars");
 
@@ -84,7 +84,7 @@ namespace ReviewManagement.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ReviewManagement.Models.Product", "Product")
-                        .WithMany("PurchasedBy")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

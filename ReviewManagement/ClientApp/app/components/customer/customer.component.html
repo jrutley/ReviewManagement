@@ -2,11 +2,10 @@
 
 <p>Yes, there is no security on this whatsoever</p>
 
-<input class="customer-name" [(ngModel)]="name" (input)="updateProducts()" placeholder="Name">
-<input [(ngModel)]="email" placeholder="Email address">
-<div *ngIf="name">
-  <div>Hello {{name}}, select a product to review:</div>
+<input [(ngModel)]="email" placeholder="Email address" (input)="updateProducts()">
+<div *ngIf="email">
+  <div>User {{email}}, select a product to review:</div>
   <ul *ngIf="productViewModel">
-    <li *ngFor="let product of productViewModel.products" class="customer-product">{{product}}</li>
+    <li *ngFor="let product of productViewModel.data" class="customer-product">{{product}}</li>
   </ul>
 </div>

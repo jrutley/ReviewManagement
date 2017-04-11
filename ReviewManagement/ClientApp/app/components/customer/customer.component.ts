@@ -24,7 +24,7 @@ export class CustomerComponent {
     public getProducts() {
         return this.productService.getProducts(this.email).then(p => {
             this.productViewModel = p;
-            this.products = p.products;
+            this.products = p.data;
             console.log("GOT PRODUCT");
             console.log(this.products);
             return this.products;
