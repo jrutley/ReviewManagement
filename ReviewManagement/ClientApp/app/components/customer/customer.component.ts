@@ -22,7 +22,7 @@ export class CustomerComponent {
     }
 
     public getProducts() {
-        return this.productService.getProducts("CHANGEME").then(p => {
+        return this.productService.getProducts(this.email).then(p => {
             this.productViewModel = p;
             this.products = p.products;
             console.log("GOT PRODUCT");

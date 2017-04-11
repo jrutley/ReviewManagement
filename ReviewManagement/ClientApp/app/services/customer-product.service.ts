@@ -11,8 +11,8 @@ export class CustomerProductService {
 
     constructor(private http: Http) { }
 
-    getProducts(customerName: string): Promise<ProductViewModel> {
-        return this.http.get(this.productUrl)
+    getProducts(email: string): Promise<ProductViewModel> {
+        return this.http.get(this.productUrl + '?email=' + email) // Don't use a GET in a query string in a production app!
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
@@ -20,6 +20,7 @@ export class CustomerProductService {
 
     private extractData(res: Response): ProductViewModel {
         console.log('successfully extracted')
+        console.log(res);
         let body = res.json();
         let viewModel = new ProductViewModel(body.data.map(p => p.name));
         console.log(viewModel);
