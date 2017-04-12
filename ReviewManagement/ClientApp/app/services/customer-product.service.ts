@@ -19,9 +19,8 @@ export class CustomerProductService {
     }
 
     private extractData(res: Response): ProductViewModel {
-        let body = res.json().data;
-        let viewModel = new ProductViewModel(body.map(p => p.product.name));
-        return viewModel || { data: [] };
+        let body = res.json().data || [];
+        return new ProductViewModel(body.map(p => p.product.name));
     }
 
     private handleError(error: Response | any) {

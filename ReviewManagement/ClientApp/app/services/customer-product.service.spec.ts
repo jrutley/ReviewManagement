@@ -18,6 +18,21 @@ describe('Customer-product service\'s', () => {
     }));
 
     describe('getProducts', () => {
+        it('should return an empty Product array when email not found',
+            async(inject([CustomerProductService, XHRBackend], (service, backend) => {
+
+                backend.connections.subscribe((connection) => {
+                    connection.mockRespond(new Response(new ResponseOptions({
+                        body: JSON.stringify({ data: [] })
+                    })));
+                });
+
+                service.getProducts().then(p => {
+                    console.log(p);
+                    expect(p.data.length).toBe(0);
+                })
+            })));
+
         it('should return a Promise<ProductViewModel>',
             async(inject([CustomerProductService, XHRBackend], (service, backend) => {
 
@@ -28,7 +43,6 @@ describe('Customer-product service\'s', () => {
                 });
 
                 service.getProducts().then(p => {
-                    console.log(p);
                     expect(p.data[0]).toBe("Product 1");
                 })
             })));
