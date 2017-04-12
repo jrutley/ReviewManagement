@@ -4,6 +4,9 @@ namespace ReviewManagement.Models
 {
     public static class DbInitializer
     {
+        const string DarkHelmet = "Dark Helmet";
+        const string Yogurt = "Yogurt";
+
         public static void Initialize(ProductContext context)
         {
             context.Database.EnsureCreated();
@@ -15,7 +18,8 @@ namespace ReviewManagement.Models
 
             var customers = new Customer[]
             {
-                new Customer{CustomerId = 1, Email = "helmet@spaceballs.com", Name = "Dark Helmet"}
+                new Customer {Email = "helmet@spaceballs.com", Name = DarkHelmet},
+                new Customer {Email = "yogurt@spaceballs.com", Name = Yogurt}
             };
 
             foreach (var c in customers)
@@ -23,10 +27,31 @@ namespace ReviewManagement.Models
                 context.Customers.Add(c);
             }
 
+            context.SaveChanges();
+
+            var darkHelmet = customers.First(c => c.Name == DarkHelmet);
+            var yogurt = customers.First(c => c.Name == Yogurt);
+
+            var reviews = new Review[]
+            {
+                new Review{Comments = "So kissable", CustomerId = darkHelmet.CustomerId, Stars = 5},
+                new Review{Comments = "Can't stand him", CustomerId = darkHelmet.CustomerId, Stars = 1},
+                new Review{Comments = "Love to show it off!", CustomerId = yogurt.CustomerId, Stars = 4}
+            };
+
+            foreach (var r in reviews)
+            {
+                context.Reviews.Add(r);
+            }
+
+            context.SaveChanges();
 
             var products = new Product[]
             {
-                new Product{Description = "Loves money and power", Name = "Princess Vespa doll", ProductId = 1 }
+                new Product {Description = "Loves money and power", Name = "Princess Vespa doll" },
+                new Product {Description = "Rugged and handsome", Name = "LoneStar doll" },
+                new Product {Description = "Half man/Half dog. He's a mog!", Name = "Barf doll" },
+                new Product {Description = "The kids love this one", Name = "Spaceballs, the flamethrower" }
             };
 
             foreach (var p in products)
@@ -34,14 +59,18 @@ namespace ReviewManagement.Models
                 context.Products.Add(p);
             }
 
-            var reviews = new Review[]
-            {
-                new Review{Comments = "Love it!", CustomerId = 1, ReviewId = 1, Stars = 5}
-            };
+            context.SaveChanges();
 
-            foreach (var r in reviews)
+            var customerProductJoinTable = new CustomerProduct[]
             {
-                context.Reviews.Add(r);
+                new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[0]},
+                new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[1]},
+                new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[2]},
+                new CustomerProduct{CustomerId = yogurt.CustomerId, Product = products[3]}
+            };
+            foreach (var cp in customerProductJoinTable)
+            {
+                context.CustomerProduct.Add(cp);
             }
 
             context.SaveChanges();
