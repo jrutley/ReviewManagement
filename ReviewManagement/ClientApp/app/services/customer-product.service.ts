@@ -20,7 +20,12 @@ export class CustomerProductService {
 
     private extractData(res: Response): ProductViewModel[] {
         let body = res.json().data || [];
-        return body.map(p => { return { name: p.product.name, review: p.review.comments } });
+        return body.map(p => {
+            return {
+                name: p.product.name,
+                review: p.review ? p.review.comments : undefined
+            }
+        });
     }
 
     private handleError(error: Response | any) {

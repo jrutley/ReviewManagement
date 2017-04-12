@@ -29,8 +29,26 @@ describe('Customer-product service\'s', () => {
                     })));
                 });
 
-                service.getProducts().then(p => {
+                service.getProducts("email").then(p => {
                     expect(p.length).toBe(0);
+                })
+            })));
+
+        it('should return an empty Review when the customer hasn\'t written a review for that product',
+            async(inject([CustomerProductService, XHRBackend], (service, backend) => {
+
+                backend.connections.subscribe((connection) => {
+                    connection.mockRespond(new Response(new ResponseOptions({
+                        body: JSON.stringify({
+                            data: [
+                                { product: { name: SERVICEPRODUCTNAME } }
+                            ] })
+                    })));
+                });
+
+                service.getProducts("email").then(p => {
+                    expect(p[0].name).toBe(SERVICEPRODUCTNAME);
+                    expect(p[0].review).toBe(undefined);
                 })
             })));
 
@@ -43,7 +61,7 @@ describe('Customer-product service\'s', () => {
                     })));
                 });
 
-                service.getProducts().then(p => {
+                service.getProducts("email").then(p => {
                     expect(p[0].name).toBe(SERVICEPRODUCTNAME);
                     expect(p[0].review).toBe(SERVICEPRODUCTCOMMENT);
                 })
