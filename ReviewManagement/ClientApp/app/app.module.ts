@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { UniversalModule } from 'angular2-universal';
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -18,7 +18,8 @@ import { ProductData } from './services/product-data';
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
-        FormsModule,
+        ReactiveFormsModule,
+
         RouterModule.forRoot([
             { path: '', redirectTo: 'customer', pathMatch: 'full' },
             { path: 'customer', component: CustomerComponent },

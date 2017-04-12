@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductViewModel } from './product.viewmodel'
 import { CustomerProductService } from '../../services/customer-product.service';
+import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
     selector: 'customer',
@@ -10,19 +12,10 @@ import { CustomerProductService } from '../../services/customer-product.service'
 
 export class CustomerComponent {
     public name: string;
-    public email: string;
+    email = new FormControl();
     public productViewModel: ProductViewModel[];
 
-    constructor(private productService: CustomerProductService) { }
-
-    public updateProducts() {
-        this.getProducts();
-    }
-
-    public getProducts() {
-        return this.productService.getProducts(this.email).then(p => {
-            this.productViewModel = p;
-            return this.productViewModel;
-        });
+    constructor(private productService: CustomerProductService) {
+        let subscription = this.email.valueChanges.debounceTime(400).subscribe(email => this.productService.getProducts(email).then(p => { this.productViewModel = p; }));
     }
 }

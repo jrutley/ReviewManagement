@@ -2,7 +2,7 @@
 import { TestBed, async, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { CustomerComponent } from './customer.component';
 import { ProductViewModel } from './product.viewmodel';
@@ -27,7 +27,7 @@ describe('Customer component', () => {
                 CustomerComponent
             ],
             imports: [
-                FormsModule
+                ReactiveFormsModule
             ]
         })
             // Override component's own provider
@@ -50,12 +50,6 @@ describe('Customer component', () => {
         expect(titleText).toEqual('Customer');
     }));
 
-    it('should use the mocked service', async(() => {
-        comp.getProducts().then(p => {
-            expect(p[0].name).toContain("Mock 1");
-        });
-    }));
-
     it('should bind the input to the correct property', () => {
         let input = fixture.debugElement.query(By.css('input'));
         let inputElement = input.nativeElement;
@@ -64,7 +58,7 @@ describe('Customer component', () => {
         inputElement.value = 'test value';
         inputElement.dispatchEvent(new Event('input'));
 
-        expect(fixture.componentInstance.email).toBe('test value');
+        expect(fixture.componentInstance.email.value).toBe('test value');
     });
 
     it('should display purchased products after email is entered', fakeAsync(() => {
