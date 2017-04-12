@@ -13,9 +13,12 @@ import 'rxjs/add/operator/debounceTime';
 export class CustomerComponent {
     public name: string;
     email = new FormControl();
-    public productViewModel: ProductViewModel[];
+    public productsViewModel: ProductViewModel[];
 
     constructor(private productService: CustomerProductService) {
-        let subscription = this.email.valueChanges.debounceTime(400).subscribe(email => this.productService.getProducts(email).then(p => { this.productViewModel = p; }));
+        let subscription = this.email.valueChanges
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .subscribe(email => this.productService.getProducts(email).then(p => { this.productsViewModel = p; }));
     }
 }

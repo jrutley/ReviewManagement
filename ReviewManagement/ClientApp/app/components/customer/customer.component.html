@@ -6,6 +6,6 @@
 <div *ngIf="email.value">
   <div>User {{email.value}}, select a product to review:</div>
   <ul *ngIf="productViewModel">
-    <li *ngFor="let product of productViewModel" class="customer-product">Product: {{product.name}} Review: {{product.review}}</li>
+    <li *ngFor="let product of productsViewModel" class="customer-product">Product: {{product.name}} Review: {{product.review}}</li>
   </ul>
 </div>
