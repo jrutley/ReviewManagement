@@ -5,15 +5,14 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { CustomerComponent } from './customer.component';
-import { ProductViewModel } from './product.viewmodel.component';
+import { ProductViewModel } from './product.viewmodel';
 import { CustomerProductService } from '../../services/customer-product.service';
 
 class MockCustomerProductService {
-    getProducts(st: string): Promise<ProductViewModel> {
-        console.log("MOCK PRODUCT SERVICE");
-        const mockProduct = { data: ["Mock 1", "Mock 2"] };
+    getProducts(st: string): Promise<ProductViewModel[]> {
+        const mockProduct = [{ name: "Mock 1", review: "Sucks!" }, { name: "Mock 2", review: "Awesome!" }];
         return Promise.resolve(mockProduct);
-    }
+    };
 }
 
 describe('Customer component', () => {
@@ -53,7 +52,7 @@ describe('Customer component', () => {
 
     it('should use the mocked service', async(() => {
         comp.getProducts().then(p => {
-            expect(p).toContain("Mock 1");
+            expect(p[0].name).toContain("Mock 1");
         });
     }));
 
@@ -80,7 +79,7 @@ describe('Customer component', () => {
 
         const products = fixture.debugElement.queryAll(By.css('li'));
         expect(products.length).toBeGreaterThan(0);
-        expect(products[0].nativeElement.textContent).toBe('Mock 1');
+        expect(products[0].nativeElement.textContent).toBe('Product: Mock 1 Review: Sucks!');
     }));
 
     it('should display the customer\'s existing reviews for that after email is entered', fakeAsync(() => {
@@ -95,6 +94,6 @@ describe('Customer component', () => {
 
         const products = fixture.debugElement.queryAll(By.css('li'));
         expect(products.length).toBeGreaterThan(0);
-        expect(products[0].nativeElement.textContent).toBe('Mock 1');
+        expect(products[0].nativeElement.textContent).toContain('Mock 1');
     }));
 });

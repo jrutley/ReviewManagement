@@ -3,9 +3,11 @@ import { HttpModule, XHRBackend, Response, ResponseOptions } from '@angular/http
 import { MockBackend } from '@angular/http/testing';
 import { CustomerProductService } from './customer-product.service';
 
+const SERVICEPRODUCTNAME = 'Service product name';
+const SERVICEPRODUCTCOMMENT = 'Service comment';
 const mockResponse = {
     data: [
-        { product: { name: 'Product 1' }, review: { comments: 'Sucks!' } }
+        { product: { name: SERVICEPRODUCTNAME }, review: { comments: SERVICEPRODUCTCOMMENT } }
     ]
 };
 
@@ -28,12 +30,11 @@ describe('Customer-product service\'s', () => {
                 });
 
                 service.getProducts().then(p => {
-                    console.log(p);
-                    expect(p.data.length).toBe(0);
+                    expect(p.length).toBe(0);
                 })
             })));
 
-        it('should return a Promise<ProductViewModel>',
+        it('should return a Promise<ProductViewModel[]>',
             async(inject([CustomerProductService, XHRBackend], (service, backend) => {
 
                 backend.connections.subscribe((connection) => {
@@ -43,7 +44,8 @@ describe('Customer-product service\'s', () => {
                 });
 
                 service.getProducts().then(p => {
-                    expect(p.data[0]).toBe("Product 1");
+                    expect(p[0].name).toBe(SERVICEPRODUCTNAME);
+                    expect(p[0].review).toBe(SERVICEPRODUCTCOMMENT);
                 })
             })));
     })

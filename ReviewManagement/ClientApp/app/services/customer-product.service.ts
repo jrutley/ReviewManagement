@@ -1,4 +1,4 @@
-import { ProductViewModel } from '../components/customer/product.viewmodel.component';
+import { ProductViewModel } from '../components/customer/product.viewmodel';
 import { Product } from './product.model';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
@@ -11,16 +11,16 @@ export class CustomerProductService {
 
     constructor(private http: Http) { }
 
-    getProducts(email: string): Promise<ProductViewModel> {
+    getProducts(email: string): Promise<ProductViewModel[]> {
         return this.http.get(this.productUrl + '?email=' + email) // Don't use a GET in a query string in a production app!
             .toPromise()
             .then(this.extractData)
             .catch(this.handleError);
     }
 
-    private extractData(res: Response): ProductViewModel {
+    private extractData(res: Response): ProductViewModel[] {
         let body = res.json().data || [];
-        return new ProductViewModel(body.map(p => p.product.name));
+        return body.map(p => { return { name: p.product.name, review: p.review.comments } });
     }
 
     private handleError(error: Response | any) {

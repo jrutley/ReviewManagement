@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductViewModel } from './product.viewmodel.component'
+import { ProductViewModel } from './product.viewmodel'
 import { CustomerProductService } from '../../services/customer-product.service';
 
 @Component({
@@ -11,8 +11,7 @@ import { CustomerProductService } from '../../services/customer-product.service'
 export class CustomerComponent {
     public name: string;
     public email: string;
-    public productViewModel: ProductViewModel;
-    public products: string[];
+    public productViewModel: ProductViewModel[];
 
     constructor(private productService: CustomerProductService) { }
 
@@ -23,10 +22,7 @@ export class CustomerComponent {
     public getProducts() {
         return this.productService.getProducts(this.email).then(p => {
             this.productViewModel = p;
-            this.products = p.data;
-            //console.log("GOT PRODUCT");
-            //console.log(this.products);
-            return this.products;
+            return this.productViewModel;
         });
     }
 }
