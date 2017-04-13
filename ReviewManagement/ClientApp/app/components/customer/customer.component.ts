@@ -3,6 +3,7 @@ import { ProductViewModel } from './product.viewmodel'
 import { CustomerProductService } from '../../services/customer-product.service';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
     selector: 'customer',
@@ -20,5 +21,9 @@ export class CustomerComponent {
             .debounceTime(400)
             .distinctUntilChanged()
             .subscribe(email => this.productService.getProducts(email).then(p => { this.productsViewModel = p; }));
+    }
+
+    updateReview() {
+        console.log("TODO");
     }
 }

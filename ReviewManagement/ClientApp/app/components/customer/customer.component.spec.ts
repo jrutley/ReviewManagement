@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerComponent } from './customer.component';
 import { ProductViewModel } from './product.viewmodel';
 import { CustomerProductService } from '../../services/customer-product.service';
+import { Observable } from 'rxjs';
 
 class MockCustomerProductService {
     getProducts(st: string): Promise<ProductViewModel[]> {
@@ -20,6 +21,12 @@ describe('Customer component', () => {
     let comp: CustomerComponent;
     let de: DebugElement;
     let el: HTMLInputElement;
+
+    beforeAll(() => {
+        // Monkey-patch Observable.debounceTime() since it is using
+        // setInterval() internally which not allowed within async zone
+        Observable.prototype.debounceTime = function () { return this; };
+    });
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -73,7 +80,7 @@ describe('Customer component', () => {
 
         const products = fixture.debugElement.queryAll(By.css('li'));
         expect(products.length).toBeGreaterThan(0);
-        expect(products[0].nativeElement.textContent).toBe('Product: Mock 1 Review: Sucks!');
+        expect(products[0].nativeElement.textContent).toContain('Product: Mock 1 Review: Sucks!');
     }));
 
     it('should display the customer\'s existing reviews for that after email is entered', fakeAsync(() => {
@@ -90,4 +97,12 @@ describe('Customer component', () => {
         expect(products.length).toBeGreaterThan(0);
         expect(products[0].nativeElement.textContent).toContain('Mock 1');
     }));
+
+    it('should display Add Review on the button when no review exists', () => {
+        pending();
+    });
+    it('should display Edit Review on the button when a review exists', () => {
+        pending();
+    })
+
 });

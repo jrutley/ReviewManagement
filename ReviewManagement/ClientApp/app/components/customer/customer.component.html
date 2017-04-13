@@ -5,7 +5,9 @@
 <input [formControl]="email" placeholder="Email address">
 <div *ngIf="email.value">
   <div>User {{email.value}}, select a product to review:</div>
-  <ul *ngIf="productViewModel">
-    <li *ngFor="let product of productsViewModel" class="customer-product">Product: {{product.name}} Review: {{product.review}}</li>
+  <ul *ngIf="productsViewModel">
+    <li *ngFor="let product of productsViewModel" class="customer-product">
+      Product: {{product.name}} Review: {{product.review}} <button (click)="updateReview()"></button>
+    </li>
   </ul>
 </div>
