@@ -10,10 +10,26 @@ import { CustomerProductService } from '../../services/customer-product.service'
 import { Observable } from 'rxjs';
 
 class MockCustomerProductService {
+    data;
+    error;
+
     getProducts(st: string): Promise<ProductViewModel[]> {
         const mockProduct = [{ name: "Mock 1", review: "Sucks!" }, { name: "Mock 2", review: "Awesome!" }, { name: "No review" }];
         return Promise.resolve(mockProduct);
     };
+    getAllEmails() {
+        this.data = ['email@email.com'];
+        return this;
+    }
+    then(callback) {
+        if (!this.error) {
+            callback(this.data);
+        }
+        return this;
+    }
+    catch(callback) {
+        return this;
+    }
 }
 
 describe('Customer component', () => {
@@ -52,10 +68,10 @@ describe('Customer component', () => {
         fixture.detectChanges();
     });
 
-    it('should display a title', async(() => {
+    it('should display a title', () => {
         const titleText = fixture.nativeElement.querySelector('h1').textContent;
         expect(titleText).toEqual('Customer');
-    }));
+    });
 
     it('should bind the input to the correct property', () => {
         let input = fixture.debugElement.query(By.css('input'));
@@ -68,6 +84,13 @@ describe('Customer component', () => {
         expect(fixture.componentInstance.email.value).toBe('test value');
     });
 
+    describe('on page load', () => {
+        it('getAllEmails is called', () => {
+            let emails = fixture.componentInstance.emails;
+            expect(emails[0]).toBe('email@email.com')
+        });
+    })
+
     describe('after email is entered', () => {
         beforeEach(fakeAsync(() => {
             de = fixture.debugElement.query(By.css('input'));
@@ -79,14 +102,15 @@ describe('Customer component', () => {
 
         }));
         it('should display purchased products', fakeAsync(() => {
-            const products = fixture.debugElement.queryAll(By.css('li'));
+            const products = fixture.debugElement.queryAll(By.css('.customer-product'));
+
             expect(products.length).toBeGreaterThan(0);
             expect(products[0].nativeElement.textContent).toContain('Mock 1');
             expect(products[0].nativeElement.textContent).toContain('Sucks!');
         }));
 
         it('should display the customer\'s existing reviews for that', fakeAsync(() => {
-            const products = fixture.debugElement.queryAll(By.css('li'));
+            const products = fixture.debugElement.queryAll(By.css('.customer-product'));
             expect(products.length).toBeGreaterThan(0);
             expect(products[0].nativeElement.textContent).toContain('Mock 1');
         }));

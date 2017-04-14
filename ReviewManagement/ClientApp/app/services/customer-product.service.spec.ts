@@ -19,6 +19,21 @@ describe('Customer-product service\'s', () => {
         });
     }));
 
+    describe('getAllEmails', () => {
+        it('should return all customers in a data list', () => {
+            const testEmail = 'test@example.com';
+            async(inject([CustomerProductService, XHRBackend], (service, xhr) => {
+                xhr.connections.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify({ data: [testEmail] })
+                })))
+                service.getAllEmails().then(e => {
+                    expect(e.length).toBe(1);
+                    expect(e[0]).toBe(testEmail);
+                })
+            }))
+        })
+    })
+
     describe('getProducts', () => {
         it('should return an empty Product array when email not found',
             async(inject([CustomerProductService, XHRBackend], (service, backend) => {
@@ -42,7 +57,8 @@ describe('Customer-product service\'s', () => {
                         body: JSON.stringify({
                             data: [
                                 { product: { name: SERVICEPRODUCTNAME } }
-                            ] })
+                            ]
+                        })
                     })));
                 });
 

@@ -16,11 +16,12 @@ export class CustomerProductService {
     getAllEmails(): Promise<string[]> {
         return this.http.get(this.emailsUrl)
             .toPromise()
-            .then(this.extractEmails);
+            .then(this.extractEmails)
+            .catch(e => { return ["Sorry, an error occurred"] });
     }
 
     private extractEmails(res: Response): string[] {
-        return res.json() || [];
+        return res.json().data || [];
     }
 
     getProducts(email: string): Promise<ProductViewModel[]> {
