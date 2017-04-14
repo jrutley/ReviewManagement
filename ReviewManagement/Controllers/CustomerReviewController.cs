@@ -17,6 +17,18 @@ namespace ReviewManagement.Controllers
       _customerDb = customerDb;
     }
 
+
+    [HttpGet("[action]")]
+    public IActionResult GetEmails()
+    {
+      var customers = _customerDb.Customers;
+
+      if (customers == null) return Ok(new List<CustomersDTOWrapper>());
+      var wrapped = new CustomersDTOWrapper { Data = customers.Select(c => c.Email).ToArray() };
+      return Ok(wrapped);
+    }
+
+
     [HttpGet("[action]")]
     public IActionResult MyProductsAndReviews([FromQuery] string email) // Don't do this in a real app!
     {

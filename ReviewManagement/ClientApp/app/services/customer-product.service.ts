@@ -7,9 +7,21 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CustomerProductService {
-    private productUrl = '/api/CustomerReview/MyProductsAndReviews';
+    private rootUrl = 'api/CustomerReview/';
+    private emailsUrl = this.rootUrl + 'GetEmails'
+    private productUrl = this.rootUrl + 'MyProductsAndReviews';
 
     constructor(private http: Http) { }
+
+    getAllEmails(): Promise<string[]> {
+        return this.http.get(this.emailsUrl)
+            .toPromise()
+            .then(this.extractEmails);
+    }
+
+    private extractEmails(res: Response): string[] {
+        return res.json() || [];
+    }
 
     getProducts(email: string): Promise<ProductViewModel[]> {
         return this.http.get(this.productUrl + '?email=' + email) // Don't use a GET in a query string in a production app!

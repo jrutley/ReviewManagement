@@ -1,13 +1,26 @@
 <h1>Customer</h1>
 
 <p>Yes, there is no security on this whatsoever</p>
+<div *ngIf="emails">Try one of
+  <ul>
+    <li *ngFor="let email of emails.data">
+      {{email}}
+    </li>
+  </ul>
+</div>
 
-<input [formControl]="email" placeholder="Email address">
+<input [formControl]="email" placeholder="Email address" size="50">
 <div *ngIf="email.value">
   <div>User {{email.value}}, select a product to review:</div>
   <ul *ngIf="productsViewModel">
     <li *ngFor="let product of productsViewModel" class="customer-product">
-      Product: {{product.name}} Review: {{product.review}} <button (click)="updateReview()"></button>
+      Product: {{product.name}}
+      <span *ngIf="product.review">Review: {{product.review}}</span>
+      <div *ngIf="!product.review">
+        <textarea rows="4" columns="50">
+        </textarea>
+        <button (click)="addReview()">Add Review</button>
+      </div>
     </li>
   </ul>
 </div>

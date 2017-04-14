@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 
 class MockCustomerProductService {
     getProducts(st: string): Promise<ProductViewModel[]> {
-        const mockProduct = [{ name: "Mock 1", review: "Sucks!" }, { name: "Mock 2", review: "Awesome!" }];
+        const mockProduct = [{ name: "Mock 1", review: "Sucks!" }, { name: "Mock 2", review: "Awesome!" }, { name: "No review" }];
         return Promise.resolve(mockProduct);
     };
 }
@@ -68,41 +68,40 @@ describe('Customer component', () => {
         expect(fixture.componentInstance.email.value).toBe('test value');
     });
 
-    it('should display purchased products after email is entered', fakeAsync(() => {
+    describe('after email is entered', () => {
+        beforeEach(fakeAsync(() => {
+            de = fixture.debugElement.query(By.css('input'));
+            el = de.nativeElement;
+            el.value = "Hi";
+            el.dispatchEvent(new Event('input'));
+            tick();
+            fixture.detectChanges();
 
-        // Add entered email
-        de = fixture.debugElement.query(By.css('input'));
-        el = de.nativeElement;
-        el.value = "Hi";
-        el.dispatchEvent(new Event('input'));
-        tick();
-        fixture.detectChanges();
+        }));
+        it('should display purchased products', fakeAsync(() => {
+            const products = fixture.debugElement.queryAll(By.css('li'));
+            expect(products.length).toBeGreaterThan(0);
+            expect(products[0].nativeElement.textContent).toContain('Mock 1');
+            expect(products[0].nativeElement.textContent).toContain('Sucks!');
+        }));
 
-        const products = fixture.debugElement.queryAll(By.css('li'));
-        expect(products.length).toBeGreaterThan(0);
-        expect(products[0].nativeElement.textContent).toContain('Product: Mock 1 Review: Sucks!');
-    }));
+        it('should display the customer\'s existing reviews for that', fakeAsync(() => {
+            const products = fixture.debugElement.queryAll(By.css('li'));
+            expect(products.length).toBeGreaterThan(0);
+            expect(products[0].nativeElement.textContent).toContain('Mock 1');
+        }));
+        it('should display an Add Review button when no review exists', () => {
+            const button = fixture.debugElement.query(By.css('button'));
+            expect(button.parent.children.find(el => el.nativeElement.textContent === 'No review'))
+        });
 
-    it('should display the customer\'s existing reviews for that after email is entered', fakeAsync(() => {
+        it('should not display an Add Review button when a review exists', () => {
+            const products = fixture.debugElement.queryAll(By.css('li'));
+            console.log(products);
+            expect(products[0].query(By.css('button'))).toBe(null);
+        });
 
-        // Add entered email
-        de = fixture.debugElement.query(By.css('input'));
-        el = de.nativeElement;
-        el.value = "Hi";
-        el.dispatchEvent(new Event('input'));
-        tick();
-        fixture.detectChanges();
-
-        const products = fixture.debugElement.queryAll(By.css('li'));
-        expect(products.length).toBeGreaterThan(0);
-        expect(products[0].nativeElement.textContent).toContain('Mock 1');
-    }));
-
-    it('should display Add Review on the button when no review exists', () => {
-        pending();
-    });
-    it('should display Edit Review on the button when a review exists', () => {
-        pending();
     })
+
 
 });
