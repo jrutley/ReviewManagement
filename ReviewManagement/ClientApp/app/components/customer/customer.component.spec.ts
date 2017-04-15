@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CustomerComponent } from './customer.component';
+import { CustomerReviewComponent } from '../customerReview/customer-review.component';
 import { ProductViewModel } from './product.viewmodel';
 import { CustomerProductService } from '../../services/customer-product.service';
 import { Observable } from 'rxjs';
@@ -47,7 +48,8 @@ describe('Customer component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                CustomerComponent
+                CustomerComponent,
+                CustomerReviewComponent
             ],
             imports: [
                 ReactiveFormsModule
