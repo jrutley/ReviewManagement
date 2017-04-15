@@ -32,7 +32,7 @@ describe('customer review', () => {
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomerReviewComponent);
-    fixture.componentInstance.product = { name: "Mock 1", review: "Sucks!" };
+    fixture.componentInstance.product = { id: 1, name: "Mock 1", review: "Sucks!" };
     fixture.detectChanges();
   });
 })

@@ -14,7 +14,7 @@
   <div>User {{email.value}}, select a product to review:</div>
   <ul *ngIf="productsViewModel">
     <li *ngFor="let product of productsViewModel" class="customer-product">
-      <cus-review [product]="product"></cus-review>
+      <cus-review [product]="product" [customerEmail]="email.value"></cus-review>
     </li>
   </ul>
 </div>

@@ -10,6 +10,7 @@ export class CustomerProductService {
     private rootUrl = 'api/CustomerReview/';
     private emailsUrl = this.rootUrl + 'GetEmails'
     private productUrl = this.rootUrl + 'MyProductsAndReviews';
+    private makeReviewUrl = this.rootUrl + 'MakeReview';
 
     constructor(private http: Http) { }
 
@@ -24,6 +25,12 @@ export class CustomerProductService {
         return res.json().data || [];
     }
 
+    makeReview(review: string, product, customer) {
+        return this.http.post(this.makeReviewUrl, { productId: product, customerId: customer, review: review })
+            .toPromise()
+            .catch(this.handleError);
+    }
+
     getProducts(email: string): Promise<ProductViewModel[]> {
         return this.http.get(this.productUrl + '?email=' + email) // Don't use a GET in a query string in a production app!
             .toPromise()
@@ -35,6 +42,7 @@ export class CustomerProductService {
         let body = res.json().data || [];
         return body.map(p => {
             return {
+                id: p.product.id,
                 name: p.product.name,
                 review: p.review ? p.review.comments : undefined
             }

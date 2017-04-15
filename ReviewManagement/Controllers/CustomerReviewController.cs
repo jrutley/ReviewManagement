@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ReviewManagement.Controllers
 {
+  public class ReviewFromCustomer
+  {
+    public int ProductId { get; set; }
+    public int CustomerId { get; set; }
+    public string Review { get; set; }
+  }
+
   [Route("api/[controller]")]
   public class CustomerReviewController : Controller
   {
@@ -45,6 +53,13 @@ namespace ReviewManagement.Controllers
       // Need to wrap this with a data property
       var wrapped = new CustomerViewDTOWrapper { Data = productMapping };
       return Ok(wrapped);
+    }
+
+    public IActionResult MakeReview([FromBody] ReviewFromCustomer review)
+    {
+      Console.WriteLine("Make Review called with ${review}");
+      // SQL update here
+      return Ok();
     }
   }
 }
