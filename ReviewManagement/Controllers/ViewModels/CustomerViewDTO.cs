@@ -8,8 +8,8 @@ namespace ReviewManagement.Controllers.ViewModels
     public Product Product { get; set; }
     public Review Review { get; set; }
   }
-    public class CustomerViewDTOWrapper
-    {
-        public IEnumerable<CustomerViewDTO> Data { get; set; }
-    }
+  public class CustomerViewDTOWrapper
+  {
+    public IEnumerable<CustomerViewDTO> Data { get; set; }
+  }
 }
