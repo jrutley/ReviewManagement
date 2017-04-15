@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using ReviewManagement.Controllers.ViewModels;
 using ReviewManagement.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace ReviewManagement.Controllers
 {
   public class ReviewFromCustomer
   {
     public int ProductId { get; set; }
-    public int CustomerId { get; set; }
+    public string CustomerEmail { get; set; }
     public string Review { get; set; }
   }
 
@@ -19,10 +20,12 @@ namespace ReviewManagement.Controllers
   public class CustomerReviewController : Controller
   {
     private ProductContext _customerDb;
+    private readonly ILogger<CustomerReviewController> _logger;
 
-    public CustomerReviewController(ProductContext customerDb)
+    public CustomerReviewController(ProductContext customerDb, ILogger<CustomerReviewController> logger)
     {
       _customerDb = customerDb;
+      _logger = logger;
     }
 
 
@@ -49,15 +52,17 @@ namespace ReviewManagement.Controllers
       var productMapping = customer
           .Products
           .Select(cp => cp.Product)
-          .Select(product => { return new CustomerViewDTO { Product = product, Review = product.Reviews.SingleOrDefault(r => r.CustomerId == customer.CustomerId) }; }).ToList();
+          .Select(product =>
+             new CustomerViewDTO { Product = product, Review = product.Reviews.SingleOrDefault(r => r.CustomerId == customer.CustomerId) }).ToList();
       // Need to wrap this with a data property
       var wrapped = new CustomerViewDTOWrapper { Data = productMapping };
       return Ok(wrapped);
     }
 
+    [HttpPost("[action]")]
     public IActionResult MakeReview([FromBody] ReviewFromCustomer review)
     {
-      Console.WriteLine("Make Review called with ${review}");
+      _logger.LogInformation($"Make Review called with <{review.CustomerEmail}> <{review.ProductId}> <{review.Review}>");
       // SQL update here
       return Ok();
     }

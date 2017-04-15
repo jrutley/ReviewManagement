@@ -23,7 +23,9 @@ export class CustomerComponent extends OnInit {
         this.email.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
-            .subscribe(email => this.productService.getProducts(email).then(p => { this.productsViewModel = p; }));
+            .subscribe(email => this.productService.getProducts(email).then(p => {
+                this.productsViewModel = p;
+            }));
 
         this.productService.getAllEmails()
             .then(res => { this.emails = res; })

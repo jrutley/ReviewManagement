@@ -25,8 +25,8 @@ export class CustomerProductService {
         return res.json().data || [];
     }
 
-    makeReview(review: string, product, customer) {
-        return this.http.post(this.makeReviewUrl, { productId: product, customerId: customer, review: review })
+    makeReview(review: string, productId: number, customerEmail: string) {
+        return this.http.post(this.makeReviewUrl, { productId: productId, customerEmail: customerEmail, review: review })
             .toPromise()
             .catch(this.handleError);
     }
@@ -42,7 +42,7 @@ export class CustomerProductService {
         let body = res.json().data || [];
         return body.map(p => {
             return {
-                id: p.product.id,
+                id: p.product.productId,
                 name: p.product.name,
                 review: p.review ? p.review.comments : undefined
             }

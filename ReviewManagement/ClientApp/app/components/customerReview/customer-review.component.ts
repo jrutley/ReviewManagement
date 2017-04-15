@@ -17,6 +17,6 @@ export class CustomerReviewComponent {
   constructor(private productService: CustomerProductService) { }
 
   addReview() {
-    this.productService.makeReview(this.reviewText, this.product.name, this.customerEmail);
+    this.productService.makeReview(this.reviewText, this.product.id, this.customerEmail);
   }
 }
