@@ -29,8 +29,4 @@ export class CustomerComponent extends OnInit {
             .then(res => { this.emails = res; })
             .catch(e => console.log(e));
     }
-
-    addReview() {
-        console.log("TODO");
-    }
 }

@@ -91,7 +91,11 @@ describe('Customer component', () => {
         });
     })
 
+
     describe('after email is entered', () => {
+        let de: DebugElement;
+        let el: HTMLInputElement;
+
         beforeEach(fakeAsync(() => {
             de = fixture.debugElement.query(By.css('input'));
             el = de.nativeElement;
@@ -126,6 +130,5 @@ describe('Customer component', () => {
         });
 
     })
-
 
 });

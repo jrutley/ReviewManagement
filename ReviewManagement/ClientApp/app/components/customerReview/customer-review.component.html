@@ -1,0 +1,7 @@
+Product: {{product.name}}
+<span *ngIf="product.review">Review: {{product.review}}</span>
+<div *ngIf="!product.review">
+  <textarea rows="4" columns="50">
+  </textarea>
+  <button (click)="addReview()">Add Review</button>
+</div>

@@ -7,6 +7,7 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { ReviewManagerComponent } from './components/review-manager/review-manager.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { ProductData } from './services/product-data';
+import { CustomerReviewComponent } from './components/customerReview/customer-review.component';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -14,7 +15,8 @@ import { ProductData } from './services/product-data';
         AppComponent,
         NavMenuComponent,
         CustomerComponent,
-        ReviewManagerComponent
+        ReviewManagerComponent,
+        CustomerReviewComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
