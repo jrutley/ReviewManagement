@@ -1,4 +1,4 @@
-Product: {{product.name}}
+<span>Product: {{product.name}}</span>
 <span *ngIf="product.review">Review: {{product.review}}</span>
 <div *ngIf="!product.review">
   <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
