@@ -64,7 +64,13 @@ namespace ReviewManagement.Controllers
     {
       _logger.LogInformation($"Make Review called with <{review.CustomerEmail}> <{review.ProductId}> <{review.Review}>");
       // SQL update here
-      return Ok();
+      var customer = _customerDb.Customers.SingleOrDefault(c => c.Email == review.CustomerEmail);
+      if (customer == null) return StatusCode(500, "Customer Email not found");
+
+      var product = _customerDb.Products.Include(p => p.Reviews).SingleOrDefault(p => p.ProductId == review.ProductId);
+      product.Reviews.Add(new Review { CustomerId = customer.CustomerId, Stars = 5 /* TODO: Fix */, Comments = review.Review });
+      _customerDb.SaveChanges();
+      return Ok(product);
     }
   }
 }

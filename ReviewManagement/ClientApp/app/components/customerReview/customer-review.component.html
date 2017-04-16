@@ -1,7 +1,9 @@
 Product: {{product.name}}
 <span *ngIf="product.review">Review: {{product.review}}</span>
 <div *ngIf="!product.review">
-  <textarea rows="4" columns="50" [(ngModel)]="reviewText">
+  <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <textarea rows="4" columns="50" formControlName="reviewText">
   </textarea>
-  <button (click)="addReview()">Add Review</button>
+    <button type="submit">Add Review</button>
+  </form>
 </div>
