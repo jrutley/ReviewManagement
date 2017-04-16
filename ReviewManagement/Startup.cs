@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ReviewManagement.Models;
 using Microsoft.EntityFrameworkCore;
+using ReviewManagement.Controllers;
 
 namespace ReviewManagement
 {
@@ -31,6 +32,7 @@ namespace ReviewManagement
 
       var connection = @"Data Source=products.db";
       services.AddDbContext<ProductContext>(options => options.UseSqlite(connection));
+      services.AddScoped<ICustomerProductRepository, CustomerProductRepository>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

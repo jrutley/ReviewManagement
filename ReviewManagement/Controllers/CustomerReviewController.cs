@@ -1,30 +1,21 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ReviewManagement.Controllers.ViewModels;
-using ReviewManagement.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ReviewManagement.Controllers
 {
-  public class ReviewFromCustomer
-  {
-    public int ProductId { get; set; }
-    public string CustomerEmail { get; set; }
-    public string Review { get; set; }
-  }
 
   [Route("api/[controller]")]
   public class CustomerReviewController : Controller
   {
-    private ProductContext _customerDb;
     private readonly ILogger<CustomerReviewController> _logger;
+    private ICustomerProductRepository _repository;
 
-    public CustomerReviewController(ProductContext customerDb, ILogger<CustomerReviewController> logger)
+    public CustomerReviewController(ICustomerProductRepository repository, ILogger<CustomerReviewController> logger)
     {
-      _customerDb = customerDb;
+      _repository = repository;
       _logger = logger;
     }
 
@@ -32,10 +23,7 @@ namespace ReviewManagement.Controllers
     [HttpGet("[action]")]
     public IActionResult GetEmails()
     {
-      var customers = _customerDb.Customers;
-
-      if (customers == null) return Ok(new List<CustomersDTOWrapper>());
-      var wrapped = new CustomersDTOWrapper { Data = customers.Select(c => c.Email).ToArray() };
+      var wrapped = new CustomersDTOWrapper { Data = _repository.GetCustomerEmails() };
       return Ok(wrapped);
     }
 
@@ -43,11 +31,8 @@ namespace ReviewManagement.Controllers
     [HttpGet("[action]")]
     public IActionResult MyProductsAndReviews([FromQuery] string email) // Don't do this in a real app!
     {
-      var customer = _customerDb.Customers
-              .Include(c => c.Products)
-              .ThenInclude(cp => cp.Product)
-              .ThenInclude(p => p.Reviews)
-              .SingleOrDefault(c => c.Email == email);
+      var customer = _repository.GetFullyLoadedCustomer(email);
+
       if (customer == null) return Ok(new List<CustomerViewDTO>());
       var productMapping = customer
           .Products
@@ -64,13 +49,17 @@ namespace ReviewManagement.Controllers
     {
       _logger.LogInformation($"Make Review called with <{review.CustomerEmail}> <{review.ProductId}> <{review.Review}>");
       // SQL update here
-      var customer = _customerDb.Customers.SingleOrDefault(c => c.Email == review.CustomerEmail);
-      if (customer == null) return StatusCode(500, "Customer Email not found");
 
-      var product = _customerDb.Products.Include(p => p.Reviews).SingleOrDefault(p => p.ProductId == review.ProductId);
-      product.Reviews.Add(new Review { CustomerId = customer.CustomerId, Stars = 5 /* TODO: Fix */, Comments = review.Review });
-      _customerDb.SaveChanges();
-      return Ok(product);
+      try
+      {
+        _repository.AddReviewForCustomer(review);
+      }
+      catch (NotFoundException)
+      {
+        return StatusCode(500, "Customer Email not found");
+      }
+
+      return Ok(review);
     }
   }
 }
