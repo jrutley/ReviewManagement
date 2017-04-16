@@ -114,32 +114,5 @@ describe('Customer component', () => {
             tick();
             fixture.detectChanges();
         }));
-
-        it('should pass down purchased products', () => {
-            const products = fixture.debugElement.queryAll(By.css('cus-review'));
-            expect(products[0].componentInstance.customerEmail === "Hi");
-            expect(products[0].componentInstance.product === mockProduct[0]);
-            // const products = fixture.debugElement.queryAll(By.css('.customer-product'));
-
-            // expect(products.length).toBeGreaterThan(0);
-            // expect(products[0].nativeElement.textContent).toContain('Mock 1');
-            // expect(products[0].nativeElement.textContent).toContain('Sucks!');
-        });
-
-        it('should display the customer\'s existing reviews for that', fakeAsync(() => {
-            // const products = fixture.debugElement.queryAll(By.css('.customer-product'));
-            // expect(products.length).toBeGreaterThan(0);
-            // expect(products[0].nativeElement.textContent).toContain('Mock 1');
-        }));
-        it('should display an Add Review button when no review exists', () => {
-            // const button = fixture.debugElement.query(By.css('button'));
-            // expect(button.parent.children.find(el => el.nativeElement.textContent === 'No review'))
-        });
-
-        it('should not display an Add Review button when a review exists', () => {
-            // const products = fixture.debugElement.queryAll(By.css('li'));
-            // console.log(products);
-            // expect(products[0].query(By.css('button'))).toBe(null);
-        });
     });
 });

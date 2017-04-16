@@ -8,7 +8,13 @@ import { ProductViewModel } from '../customer/product.viewmodel';
 import { CustomerProductService } from '../../services/customer-product.service';
 import { Observable } from 'rxjs';
 
-class MockCustomerReviewService { }
+class MockCustomerReviewService {
+  then(callback) {
+    callback();
+    return this;
+  }
+  makeReview(reviewText, productId, customerEmail) { return this; }
+}
 
 describe('customer review', () => {
   let fixture: ComponentFixture<CustomerReviewComponent>;
@@ -53,23 +59,25 @@ describe('customer review', () => {
       const spans = fixture.debugElement.queryAll(By.css('span'));
       expect(spans[1].nativeElement.textContent).toContain("Nice and smooth");
     });
+
+    it('should not display an Add Review button', () => {
+      const divs = fixture.debugElement.queryAll(By.css('div'));
+      expect(divs.length).toBe(0);
+    });
   })
 
+  describe('with no review', () => {
+    beforeEach(() => {
+      fixture.componentInstance.product = { id: 1, name: "Spaceballs the t-shirt", review: undefined };
+      fixture.detectChanges();
+    });
 
-
-  it('should display the customer\'s existing reviews for that', fakeAsync(() => {
-    // const products = fixture.debugElement.queryAll(By.css('.customer-product'));
-    // expect(products.length).toBeGreaterThan(0);
-    // expect(products[0].nativeElement.textContent).toContain('Mock 1');
-  }));
-  it('should display an Add Review button when no review exists', () => {
-    // const button = fixture.debugElement.query(By.css('button'));
-    // expect(button.parent.children.find(el => el.nativeElement.textContent === 'No review'))
+    it('should call "makeReview" when Add Review button is clicked', async(() => {
+      fixture.componentInstance.reviewText.setValue("My review");
+      fixture.detectChanges();
+      const button: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('button');
+      button.click();
+      expect(fixture.componentInstance.product.review).toBe(fixture.componentInstance.reviewText.value);
+    }));
   });
-
-  it('should not display an Add Review button when a review exists', () => {
-    // const products = fixture.debugElement.queryAll(By.css('li'));
-    // console.log(products);
-    // expect(products[0].query(By.css('button'))).toBe(null);
-  });
-})
+});
