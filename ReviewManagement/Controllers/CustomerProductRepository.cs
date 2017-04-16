@@ -27,11 +27,6 @@ namespace ReviewManagement.Controllers
               .SingleOrDefault(c => c.Email == email);
     }
 
-    public Customer GetCustomer(string email)
-    {
-      return _customerDb.Customers.SingleOrDefault(c => c.Email == email);
-    }
-
     public void AddReviewForCustomer(ReviewFromCustomer review)
     {
       var customer = _customerDb.Customers.SingleOrDefault(c => c.Email == review.CustomerEmail);
