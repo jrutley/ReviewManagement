@@ -6,11 +6,16 @@ import { Http } from '@angular/http';
     templateUrl: './review-manager.component.html'
 })
 export class ReviewManagerComponent {
-    public forecasts: WeatherForecast[];
+    sortBy = "dateFormatted";
+    sortOrder = "desc";
+    rowsOnPage = 2;
+
+    public forecasts;//: WeatherForecast[];
+
 
     constructor(http: Http) {
         http.get('/api/SampleData/WeatherForecasts').subscribe(result => {
-            this.forecasts = result.json() as WeatherForecast[];
+            this.forecasts = result.json()// as WeatherForecast[];
         });
     }
 }

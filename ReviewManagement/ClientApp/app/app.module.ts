@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { UniversalModule } from 'angular2-universal';
+import { DataTableModule } from 'angular2-datatable';
+
 import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { ReviewManagerComponent } from './components/review-manager/review-manager.component';
@@ -23,7 +25,7 @@ import { CustomerReviewComponent } from './components/customerReview/customer-re
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         ReactiveFormsModule,
         FormsModule,
-
+        DataTableModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'customer', pathMatch: 'full' },
             { path: 'customer', component: CustomerComponent },
