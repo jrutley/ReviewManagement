@@ -10,19 +10,15 @@ export class ReviewManagerComponent {
     sortOrder = "desc";
     rowsOnPage = 2;
 
-    public forecasts;//: WeatherForecast[];
+    public reviews;
 
 
     constructor(http: Http) {
-        http.get('/api/SampleData/WeatherForecasts').subscribe(result => {
-            this.forecasts = result.json()// as WeatherForecast[];
-        });
+        // http.get('/api/SampleData/WeatherForecasts').subscribe(result => {
+        //     this.forecasts = result.json()// as WeatherForecast[];
+        // });
+
     }
 }
 
-interface WeatherForecast {
-    dateFormatted: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
-}
+

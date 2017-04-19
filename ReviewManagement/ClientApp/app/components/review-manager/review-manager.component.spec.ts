@@ -8,10 +8,17 @@ import { CustomerReviewComponent } from '../customerReview/customer-review.compo
 import { Observable } from 'rxjs';
 
 const mockProduct = [{ id: 1, name: "Mock 1", review: "Sucks!" }, { id: 2, name: "Mock 2", review: "Awesome!" }, { id: 3, name: "No review" }];
-
-class MockCustomerProductService {
+const mockReview = "Spaceballs the breakfast cereal is the best tasting ever!";
+class MockReviewService {
   data;
   error;
+
+  getReviews() {
+    return {
+      stars: 5,
+      comments: mockReview
+    }
+  }
 
   then(callback) {
     if (!this.error) {
@@ -43,7 +50,8 @@ describe('Review component', () => {
       ],
       imports: [
         //ReactiveFormsModule
-      ]
+      ],
+      //providers: [ReviewService, useClass: MockReviewService]
     })
     // Override component's own provider
     // .overrideComponent(CustomerComponent, {
@@ -64,11 +72,13 @@ describe('Review component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewManagerComponent);
     comp = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // on load it will have already imported the data from the service
   });
 
   it('should load all reviews into a table', () => {
-    pending();
+    // Get an item on the page
+    //const span = fixture.debugElement.query(By.css('span'));
+    expect(fixture.componentInstance.reviews[0]).toBe(mockReview);
   })
   it('should only load the first 10 reviews', () => {
     pending();

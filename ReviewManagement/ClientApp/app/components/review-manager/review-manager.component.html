@@ -4,41 +4,24 @@
 
 <p *ngIf="!forecasts"><em>Loading...</em></p>
 
-<table class='table' *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.dateFormatted }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>
-
-
-<table class="table table-striped" [mfData]="forecasts" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder"
+<table class="table table-striped" [mfData]="reviews" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder"
     #mf="mfDataTable">
     <thead>
         <tr>
             <th style="width: 20%">
-                <mfDefaultSorter by="dateFormatted">Date</mfDefaultSorter>
+                <mfDefaultSorter by="customer">Customer</mfDefaultSorter>
             </th>
             <th style="width: 50%">
-                <mfDefaultSorter by="temperatureC">Temp C</mfDefaultSorter>
+                <mfDefaultSorter by="datetime">Date</mfDefaultSorter>
             </th>
             <th style="width: 10%">
-                <mfDefaultSorter by="temperatureF">Temp F</mfDefaultSorter>
+                <mfDefaultSorter by="stars">Rating</mfDefaultSorter>
             </th>
             <th style="width: 20%">
-                <mfDefaultSorter by="summary">Summary</mfDefaultSorter>
+                <mfDefaultSorter by="comments">Summary</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+                <mfDefaultSorter by="state">State</mfDefaultSorter>
             </th>
         </tr>
     </thead>
