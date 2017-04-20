@@ -1,11 +1,9 @@
-<h1>Weather forecast</h1>
+<h1>Review Management</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p *ngIf="!reviews"><em>Loading...</em></p>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
-
-<table class="table table-striped" [mfData]="reviews" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder"
-    #mf="mfDataTable">
+<table class="table table-striped" *ngIf="reviews" #mf="mfDataTable" [mfData]="reviews" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
+    [(mfSortOrder)]="sortOrder">
     <thead>
         <tr>
             <th style="width: 20%">
@@ -27,10 +25,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let item of mf.data">
-            <td>{{item.dateFormatted}}</td>
-            <td>{{item.temperatureC}}</td>
-            <td class="text-right">{{item.temperatureF}}</td>
-            <td>{{item.summary | uppercase}}</td>
+            <td>{{item.customer}}</td>
+            <td>{{item.datetime}}</td>
+            <td class="text-right">{{item.stars}}</td>
+            <td>{{item.comments | uppercase}}</td>
+            <td>{{item.state}}</td>
         </tr>
     </tbody>
     <tfoot>
