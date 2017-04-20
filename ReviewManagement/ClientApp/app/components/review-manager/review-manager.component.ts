@@ -12,18 +12,10 @@ export class ReviewManagerComponent {
     sortOrder = "desc";
     rowsOnPage = 2;
 
-    public reviews = {
-        customer: "Hi",
-        datetime: new Date(),
-        stars: 5,
-        comments: "Foo",
-        state: 1
-    };
-
+    public reviews;
 
     constructor(private reviewService: ReviewService) {
-
-        //reviewService.getReviews().subscribe(n => this.reviews = n)
+        reviewService.getReviews().subscribe(n => this.reviews = n)
     }
 }
 

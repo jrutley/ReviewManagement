@@ -5,9 +5,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ReviewService {
   getReviews(): Observable<Review[]> {
-    let review = new Review();
-    review.comments = "foo";
-    review.stars = 4;
-    return Observable.of([review]);
+    let reviews = [{
+      customer: "Hi",
+      datetime: 'now',
+      stars: 5,
+      comments: "Foo",
+      state: 1
+    }];
+    return Observable.of(reviews);
   }
 }

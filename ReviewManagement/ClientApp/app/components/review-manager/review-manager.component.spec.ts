@@ -18,13 +18,13 @@ class ReviewServiceStub {
 
   getReviews() {
     console.log("Get reviews!!!");
-    return Observable.of({
+    return Observable.of([{
       stars: 5,
       comments: mockReview,
       customer: "helmet@spaceballs.com",
       datetime: new Date(),
       state: 1
-    })
+    }])
   }
 
   then(callback) {
@@ -68,13 +68,6 @@ describe('Review component', () => {
           ]
         }
       })
-    // .overrideComponent(CustomerReviewComponent, {
-    //     set: {
-    //         providers: [
-    //             { provide: CustomerProductService, useClass: MockCustomerProductService }
-    //         ]
-    //     }
-    // });
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewManagerComponent);
@@ -84,8 +77,8 @@ describe('Review component', () => {
 
   it('should load all reviews into a table', async(() => {
     // Get an item on the page
-    //const span = fixture.debugElement.query(By.css('span'));
-    //fixture.componentInstance.reviews[0]
+    const columns = fixture.debugElement.queryAll(By.css('td'));
+    expect(columns[0].nativeElement.textContent).toBe("helmet@spaceballs.com");
 
     //expect().toBe(mockReview);
   }))
