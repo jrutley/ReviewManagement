@@ -6,22 +6,22 @@
     [(mfSortOrder)]="sortOrder">
     <thead>
         <tr>
-            <th style="width: 20%">
+            <th>
                 <mfDefaultSorter by="customerEmail">Customer</mfDefaultSorter>
             </th>
-            <th style="width: 10%">
+            <th>
                 <mfDefaultSorter by="product">Product</mfDefaultSorter>
             </th>
-            <th style="width: 50%">
+            <th>
                 <mfDefaultSorter by="datetime">Date</mfDefaultSorter>
             </th>
-            <th style="width: 10%">
+            <th>
                 <mfDefaultSorter by="stars">Rating</mfDefaultSorter>
             </th>
-            <th style="width: 20%">
+            <th>
                 <mfDefaultSorter by="comments">Summary</mfDefaultSorter>
             </th>
-            <th style="width: 20%">
+            <th>
                 <mfDefaultSorter by="state">State</mfDefaultSorter>
             </th>
         </tr>
@@ -39,7 +39,7 @@
     <tfoot>
         <tr>
             <td colspan="4">
-                <mfBootstrapPaginator [rowsOnPageSet]="[2,3,4]"></mfBootstrapPaginator>
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
             </td>
         </tr>
     </tfoot>

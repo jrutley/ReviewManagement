@@ -5,20 +5,16 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class ReviewService {
-  private rootUrl = 'api/ReviewManagement/';
-  private makeReviewUrl = this.rootUrl + 'GetReviews';
+  private rootUrl = 'api/Review/';
+  private makeReviewUrl = this.rootUrl + 'AllReviews';
+
+  reviews: Observable<Review[]>;
 
   constructor(private http: Http) { }
-  getReviews(): Observable<Review[]> {
 
-    let reviews = [{
-      customerEmail: "frank@sp.com",
-      product: "Doll",
-      stars: 5,
-      comments: "Foo",
-      dateTime: new Date().toDateString(),
-      state: "Reviewed"
-    }];
-    return Observable.of(reviews);
+  getReviews(): Observable<Review[]> {
+    return this.http
+      .get(this.makeReviewUrl)
+      .flatMap(response => Observable.of(response.json().data || []));
   }
 }

@@ -33,6 +33,7 @@ namespace ReviewManagement
       var connection = @"Data Source=products.db";
       services.AddDbContext<ProductContext>(options => options.UseSqlite(connection));
       services.AddScoped<ICustomerProductRepository, CustomerProductRepository>();
+      services.AddScoped<IReviewRepository, ReviewRepository>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

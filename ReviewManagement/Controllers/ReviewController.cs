@@ -3,15 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ReviewManagement.Controllers.ViewModels;
 using Microsoft.Extensions.Logging;
-using ReviewManagement.Models;
 
 namespace ReviewManagement.Controllers
 {
-  public interface IReviewRepository
-  {
-    Product[] GetProductsWithAllReviews();
-    Customer[] GetCustomers();
-  }
 
   [Route("api/[controller]")]
   public class ReviewController : Controller
