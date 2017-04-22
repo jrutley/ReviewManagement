@@ -8,23 +8,50 @@ import { ReviewManagerComponent } from './review-manager.component';
 import { CustomerReviewComponent } from '../customerReview/customer-review.component';
 import { DataTableModule } from 'angular2-datatable';
 import { Observable } from 'rxjs';
+import { Review } from '../../services/product.model';
 
-const mockProduct = [{ id: 1, name: "Mock 1", review: "Sucks!" }, { id: 2, name: "Mock 2", review: "Awesome!" }, { id: 3, name: "No review" }];
 const mockReview = "Spaceballs the breakfast cereal is the best tasting ever!";
+const testDate = new Date(2017, 3, 1, 17, 15, 15).toDateString();
 
 class ReviewServiceStub {
   data;
   error;
 
-  getReviews() {
-    console.log("Get reviews!!!");
-    return Observable.of([{
-      stars: 5,
-      comments: mockReview,
-      customer: "helmet@spaceballs.com",
-      datetime: new Date(),
-      state: 1
-    }])
+  getReviews(): Observable<Review[]> {
+    return Observable.of([
+      {
+        stars: 5,
+        comments: mockReview,
+        customerEmail: "1@spaceballs.com",
+        dateTime: testDate,
+        state: "New",
+        product: "Item 1"
+      },
+      {
+        stars: 4,
+        comments: mockReview,
+        customerEmail: "2@spaceballs.com",
+        dateTime: testDate,
+        state: "New",
+        product: "Item 2"
+      },
+      {
+        stars: 3,
+        comments: mockReview,
+        customerEmail: "3@spaceballs.com",
+        dateTime: testDate,
+        state: "New",
+        product: "Item 3"
+      },
+      {
+        stars: 2,
+        comments: mockReview,
+        customerEmail: "4@spaceballs.com",
+        dateTime: testDate,
+        state: "Reviewed",
+        product: "Item 4"
+      }
+    ])
   }
 
   then(callback) {
@@ -41,14 +68,6 @@ class ReviewServiceStub {
 describe('Review component', () => {
   let fixture: ComponentFixture<ReviewManagerComponent>;
   let comp: ReviewManagerComponent;
-  let de: DebugElement;
-  let el: HTMLInputElement;
-
-  beforeAll(() => {
-    // Monkey-patch Observable.debounceTime() since it is using
-    // setInterval() internally which not allowed within async zone
-    Observable.prototype.debounceTime = function () { return this; };
-  });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -57,7 +76,6 @@ describe('Review component', () => {
       ],
       imports: [
         DataTableModule
-        //ReactiveFormsModule
       ]
     })
       // Override component's own provider
@@ -75,15 +93,20 @@ describe('Review component', () => {
     fixture.detectChanges(); // on load it will have already imported the data from the service
   });
 
-  it('should load all reviews into a table', async(() => {
+  it('should load all reviews into a table', () => {
     // Get an item on the page
     const columns = fixture.debugElement.queryAll(By.css('td'));
-    expect(columns[0].nativeElement.textContent).toBe("helmet@spaceballs.com");
-
+    expect(columns[0].nativeElement.textContent).toBe("1@spaceballs.com");
+    expect(columns[1].nativeElement.textContent).toBe("Item 1");
+    expect(columns[2].nativeElement.textContent).toBe(testDate.toString())
     //expect().toBe(mockReview);
-  }))
-  it('should only load the first 10 reviews', () => {
-    pending();
+  })
+  it('should only load the first 3 reviews', () => {
+    fixture.componentInstance.rowsOnPage = 3;
+    fixture.detectChanges();
+    const columns = fixture.debugElement.nativeElement.querySelectorAll('tbody td');
+
+    expect(columns.length).toBe(18); // Review has 6 properties... x 3
   })
   it('should paginate all reviews', () => {
     pending();
