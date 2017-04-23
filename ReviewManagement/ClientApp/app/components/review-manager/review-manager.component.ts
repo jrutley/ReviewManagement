@@ -10,7 +10,7 @@ import { Review } from '../../services/product.model';
 export class ReviewManagerComponent {
     sortBy = "dateFormatted";
     sortOrder = "desc";
-    rowsOnPage = 2;
+    rowsOnPage = 5;
 
     public reviews;
 
