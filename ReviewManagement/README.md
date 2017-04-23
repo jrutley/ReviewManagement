@@ -4,6 +4,8 @@ This application allows a vendor to manage reviews for their products. It is not
 
 Commands to get up and running:
 
+If using Visual Studio, just load the sln and click Start
+
 If running from the console, run 
 
 npm install
@@ -21,11 +23,11 @@ dotnet run
 
 #### Stuff left to do:
 
-- Add tests on front end  
-- Add tests on back end  
-- Wire up something on the front end to call the CustomerReviewController  
-- Add Customer ability to add a review to a product
-- Filter products to ones purchased by Customer
-- Add Vendor ability to retrieve reviews
-- Add Vendor ability to sort reviews
-- Add Vendor ability to paginate reviews
+- Add more tests on front end  
+- Add more tests on back end  
+- Add Customer ability to edit a review to a product
+- Select the Customer from the list instead of an input field
+- Add authentication
+- Add dates to seed data
+- Allow Vendor to reply to customer and update state
+- Deploy
