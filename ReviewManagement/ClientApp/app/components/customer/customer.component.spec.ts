@@ -105,6 +105,8 @@ describe('Customer component', () => {
     describe('after email is entered', () => {
         let de: DebugElement;
         let el: HTMLInputElement;
+        let productToReview: DebugElement;
+        let productViewModel: DebugElement;
 
         beforeEach(fakeAsync(() => {
             de = fixture.debugElement.query(By.css('input'));
@@ -113,6 +115,21 @@ describe('Customer component', () => {
             el.dispatchEvent(new Event('input'));
             tick();
             fixture.detectChanges();
+
+            productToReview = fixture.debugElement.query(By.css('#selectAProduct'));
+            productViewModel = fixture.debugElement.query(By.css('#productViewModel'));
         }));
+
+        describe('and email is found', () => {
+
+        });
+        describe('and email is not found', () => {
+            it('should not try to load products', () => {
+                console.log("TO REVIEW:");
+                console.log(productToReview);
+                console.log("VIEWMODEL:");
+                console.log(productViewModel);
+            })
+        });
     });
 });

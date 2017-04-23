@@ -15,6 +15,7 @@ export class CustomerComponent extends OnInit {
     public name: string;
     emails: string[];
     email = new FormControl();
+    matchingEmail = false;
     public productsViewModel: ProductViewModel[];
 
     constructor(private productService: CustomerProductService) { super(); }
@@ -23,9 +24,12 @@ export class CustomerComponent extends OnInit {
         this.email.valueChanges
             .debounceTime(400)
             .distinctUntilChanged()
-            .subscribe(email => this.productService.getProducts(email).then(p => {
-                this.productsViewModel = p;
-            }));
+            .subscribe(email => {
+                this.matchingEmail = this.emails.find(e => e === email) !== undefined;
+                return this.productService.getProducts(email).then(p => {
+                    this.productsViewModel = p;
+                })
+            });
 
         this.productService.getAllEmails()
             .then(res => { this.emails = res; })
