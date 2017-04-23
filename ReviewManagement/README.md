@@ -23,6 +23,7 @@ dotnet run
 
 #### Stuff left to do:
 
+- Show a message to the Customer if they haven't purchased any products
 - Add more tests on front end  
 - Add more tests on back end  
 - Add Customer ability to edit a review to a product

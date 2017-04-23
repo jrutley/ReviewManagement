@@ -99,7 +99,6 @@ describe('Review component', () => {
     expect(columns[0].nativeElement.textContent).toBe("1@spaceballs.com");
     expect(columns[1].nativeElement.textContent).toBe("Item 1");
     expect(columns[2].nativeElement.textContent).toBe(testDate.toString())
-    //expect().toBe(mockReview);
   })
   it('should only load the first 3 reviews', () => {
     fixture.componentInstance.rowsOnPage = 3;
@@ -107,11 +106,5 @@ describe('Review component', () => {
     const columns = fixture.debugElement.nativeElement.querySelectorAll('tbody td');
 
     expect(columns.length).toBe(18); // Review has 6 properties... x 3
-  })
-  it('should paginate all reviews', () => {
-    pending();
-  })
-  it('should allow the reviews to be sorted', () => {
-    pending();
   })
 });

@@ -1,20 +1,23 @@
 <h1>Customer</h1>
 
-<p>Yes, there is no security on this whatsoever</p>
-<div *ngIf="emails">Try one of
-  <ul>
-    <li *ngFor="let email of emails">
-      {{email}}
-    </li>
-  </ul>
-</div>
+<p>Yes, there is no security on this whatsoever. Simulate what a customer would see after logging in</p>
+<div *ngIf="!emails">Loading...</div>
+<div *ngIf="emails">
+  <div>Try one of
+    <ul>
+      <li *ngFor="let email of emails">
+        {{email}}
+      </li>
+    </ul>
+  </div>
 
-<input [formControl]="email" placeholder="Email address" size="50">
-<div *ngIf="email.value">
-  <div>User {{email.value}}, select a product to review:</div>
-  <ul *ngIf="productsViewModel">
-    <li *ngFor="let product of productsViewModel" class="customer-product">
-      <cus-review [product]="product" [customerEmail]="email.value"></cus-review>
-    </li>
-  </ul>
+  <input [formControl]="email" placeholder="Email address" size="50">
+  <div *ngIf="email.value">
+    <div>User {{email.value}}, select a product to review:</div>
+    <ul *ngIf="productsViewModel">
+      <li *ngFor="let product of productsViewModel" class="customer-product">
+        <cus-review [product]="product" [customerEmail]="email.value"></cus-review>
+      </li>
+    </ul>
+  </div>
 </div>
