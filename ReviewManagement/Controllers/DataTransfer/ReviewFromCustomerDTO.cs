@@ -1,6 +1,6 @@
 namespace ReviewManagement.Controllers
 {
-  public class ReviewFromCustomer
+  public class ReviewFromCustomerDTO
   {
     public int ProductId { get; set; }
     public string CustomerEmail { get; set; }

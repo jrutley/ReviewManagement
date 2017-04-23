@@ -7,6 +7,6 @@ namespace ReviewManagement.Controllers
   {
     IEnumerable<string> GetCustomerEmails();
     Customer GetFullyLoadedCustomer(string email);
-    void AddReviewForCustomer(ReviewFromCustomer review);
+    void AddReviewForCustomer(ReviewFromCustomerDTO review);
   }
 }

@@ -45,7 +45,7 @@ namespace ReviewManagement.Controllers
     }
 
     [HttpPost("[action]")]
-    public IActionResult MakeReview([FromBody] ReviewFromCustomer review)
+    public IActionResult MakeReview([FromBody] ReviewFromCustomerDTO review)
     {
       _logger.LogInformation($"Make Review called with <{review.CustomerEmail}> <{review.ProductId}> <{review.Review}>");
       // SQL update here

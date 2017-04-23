@@ -27,7 +27,7 @@ namespace ReviewManagement.Controllers
               .SingleOrDefault(c => c.Email == email);
     }
 
-    public void AddReviewForCustomer(ReviewFromCustomer review)
+    public void AddReviewForCustomer(ReviewFromCustomerDTO review)
     {
       var customer = _customerDb.Customers.SingleOrDefault(c => c.Email == review.CustomerEmail);
       if (customer == null) throw new NotFoundException(review.CustomerEmail);
