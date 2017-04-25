@@ -9,7 +9,6 @@ import { AppComponent } from './components/app/app.component'
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { ReviewManagerComponent } from './components/review-manager/review-manager.component';
 import { CustomerComponent } from './components/customer/customer.component';
-import { ProductData } from './services/product-data';
 import { CustomerReviewComponent } from './components/customerReview/customer-review.component';
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Review } from '../../services/product.model';
+import { Review } from '../../models/review.model';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';

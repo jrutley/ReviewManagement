@@ -8,7 +8,7 @@ import { ReviewManagerComponent } from './review-manager.component';
 import { CustomerReviewComponent } from '../customerReview/customer-review.component';
 import { DataTableModule } from 'angular2-datatable';
 import { Observable } from 'rxjs';
-import { Review } from '../../services/product.model';
+import { Review } from '../../models/review.model';
 
 const mockReview = "Spaceballs the breakfast cereal is the best tasting ever!";
 const testDate = new Date(2017, 3, 1, 17, 15, 15).toDateString();

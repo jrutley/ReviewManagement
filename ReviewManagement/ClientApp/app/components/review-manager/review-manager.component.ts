@@ -1,6 +1,5 @@
 import { ReviewService } from './review-manager.service';
 import { Component } from '@angular/core';
-import { Review } from '../../services/product.model';
 
 @Component({
     selector: 'review-manager',
@@ -10,7 +9,7 @@ import { Review } from '../../services/product.model';
 export class ReviewManagerComponent {
     sortBy = "dateFormatted";
     sortOrder = "desc";
-    rowsOnPage = 5;
+    rowsOnPage = 10;
 
     public reviews;
 

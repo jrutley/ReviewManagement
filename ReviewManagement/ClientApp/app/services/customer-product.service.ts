@@ -1,5 +1,5 @@
 import { ProductViewModel } from '../components/customer/product.viewmodel';
-import { Product } from './product.model';
+import { Product } from '../models/product.model';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
