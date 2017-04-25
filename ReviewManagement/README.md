@@ -10,11 +10,11 @@ If running from the console, run
 
 npm install
 
+webpack --config webpack.config.js
+
 webpack --config webpack.config.vendor.js
 
 dotnet restore
-
-dotnet ef database update
 
 Set mode to Development by setting the environment variable ASPNETCORE_ENVIRONMENT=Development
 
@@ -23,12 +23,10 @@ dotnet run
 
 #### Stuff left to do:
 
-- Show a message to the Customer if they haven't purchased any products
 - Add more tests on front end  
 - Add more tests on back end  
 - Add Customer ability to edit a review to a product
 - Select the Customer from the list instead of an input field
 - Add authentication
-- Add dates to seed data
 - Allow Vendor to reply to customer and update state
 - Deploy
