@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace ReviewManagement.Models
@@ -11,6 +12,17 @@ namespace ReviewManagement.Models
     const string Valium = "Prince Valium";
     const string Roland = "King Roland";
     const string LoneStar = "Lone Star";
+
+    static Random random = new Random();
+    private static DateTimeOffset GenerateDate()
+    {
+      var edt = new TimeSpan(-4, 0, 0);
+      var days = random.Next(0, 30) * -1;
+      var hours = random.Next(0, 23) * -1;
+      var minutes = random.Next(0, 59) * -1;
+      var seconds = random.Next(0, 59) * -1;
+      return new DateTimeOffset(DateTime.Now.Add(new TimeSpan(days, hours, minutes, seconds)), edt);
+    }
 
     public static void Initialize(ProductContext context)
     {
@@ -50,42 +62,42 @@ namespace ReviewManagement.Models
       {
           new Product {Description = "Loves money and power", Name = "Princess Vespa doll",
               Reviews = new []{
-                  new Review{Comments = "So kissable", CustomerId = darkHelmet.CustomerId, Stars = 5, State = ReviewStateEnum.New },
+                  new Review{DateTime = GenerateDate(), Comments = "So kissable", CustomerId = darkHelmet.CustomerId, Stars = 5, State = ReviewStateEnum.New },
               } },
           new Product {Description = "Rugged and handsome", Name = "LoneStar doll", Reviews = new[]{
-              new Review{Comments = "Can't stand him", CustomerId = darkHelmet.CustomerId, Stars = 1, State = ReviewStateEnum.Answered },
-              new Review{Comments = "Looks like me!", CustomerId = vespa.CustomerId, Stars = 5, State=ReviewStateEnum.Reviewed}
+              new Review{DateTime = GenerateDate(), Comments = "Can't stand him", CustomerId = darkHelmet.CustomerId, Stars = 1, State = ReviewStateEnum.Answered },
+              new Review{DateTime = GenerateDate(), Comments = "Looks like me!", CustomerId = vespa.CustomerId, Stars = 5, State=ReviewStateEnum.Reviewed}
           } },
           new Product {Description = "Half man/Half dog. He's a mog!", Name = "Barf doll", Reviews = new Review[0]},
           new Product {Description = "6 foot long flame", Name = "Spaceballs, the flamethrower", Reviews = new []{
-              new Review{Comments = "The kids love this one", CustomerId = yogurt.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
+              new Review{DateTime = GenerateDate(), Comments = "The kids love this one", CustomerId = yogurt.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
           } },
           new Product {Description = "", Name = "Spaceballs, the breakfast cereal", Reviews = new []{
-              new Review{Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed },
-              new Review{Comments = "AWESOME!", CustomerId = lonestar.CustomerId, Stars = 5, State = ReviewStateEnum.Reviewed },
-              new Review{Comments = "I like dog food better", CustomerId = barf.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
+              new Review{DateTime = GenerateDate(), Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed },
+              new Review{DateTime = GenerateDate(), Comments = "AWESOME!", CustomerId = lonestar.CustomerId, Stars = 5, State = ReviewStateEnum.Reviewed },
+              new Review{DateTime = GenerateDate(), Comments = "I like dog food better", CustomerId = barf.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
           } },
           new Product {Description = "", Name = "Spaceballs, the T-shirt", Reviews = new []{
-              new Review{Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 2, State = ReviewStateEnum.Reviewed },
-              new Review{Comments = "Nice cotton", CustomerId = lonestar.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
+              new Review{DateTime = GenerateDate(), Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 2, State = ReviewStateEnum.Reviewed },
+              new Review{DateTime = GenerateDate(), Comments = "Nice cotton", CustomerId = lonestar.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
           } },
           new Product {Description = "", Name = "Spaceballs, the lunch box", Reviews = new []{
-              new Review{Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 3, State = ReviewStateEnum.Reviewed },
-              new Review{Comments = "Good for holding dog food", CustomerId = barf.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
+              new Review{DateTime = GenerateDate(), Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 3, State = ReviewStateEnum.Reviewed },
+              new Review{DateTime = GenerateDate(), Comments = "Good for holding dog food", CustomerId = barf.CustomerId, Stars = 4, State = ReviewStateEnum.Reviewed }
           } },
           new Product {Description = "May the Schwartz be with you", Name = "Spaceballs, the Yogurt doll", Reviews = new []{
-              new Review{Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 2, State = ReviewStateEnum.Reviewed },
-              new Review{Comments = "So adorable", CustomerId = yogurt.CustomerId, Stars = 5, State = ReviewStateEnum.Reviewed }
+              new Review{DateTime = GenerateDate(), Comments = "borrrrring", CustomerId = valium.CustomerId, Stars = 2, State = ReviewStateEnum.Reviewed },
+              new Review{DateTime = GenerateDate(), Comments = "So adorable", CustomerId = yogurt.CustomerId, Stars = 5, State = ReviewStateEnum.Reviewed }
           } },
-          new Product {Description = "", Name = "Spaceballs, the toilet paper", Reviews = new Review[0] },
-          new Product {Description = "", Name = "Spaceballs, the mirror", Reviews = new Review[0] },
-          new Product {Description = "", Name = "Spaceballs, the brush", Reviews = new Review[0] },
-          new Product {Description = "", Name = "Spaceballs, the comb", Reviews = new Review[0] },
-          new Product {Description = "", Name = "Spaceballs, the shaving cream", Reviews = new Review[]{
-            new Review {Comments = "Never know when you might need it", CustomerId = lonestar.CustomerId, Stars = 5, State = ReviewStateEnum.New}
+          new Product {Description = "2-ply", Name = "Spaceballs, the toilet paper", Reviews = new Review[0] },
+          new Product {Description = "Shows your reflection", Name = "Spaceballs, the mirror", Reviews = new Review[0] },
+          new Product {Description = "Brushes your hair", Name = "Spaceballs, the brush", Reviews = new Review[0] },
+          new Product {Description = "Not good for combing deserts", Name = "Spaceballs, the comb", Reviews = new Review[0] },
+          new Product {Description = "Helps with shaving", Name = "Spaceballs, the shaving cream", Reviews = new Review[]{
+            new Review {DateTime = GenerateDate(), Comments = "Never know when you might need it", CustomerId = lonestar.CustomerId, Stars = 5, State = ReviewStateEnum.New}
           } },
-          new Product {Description = "", Name = "Spaceballs, the soap", Reviews = new Review[0] },
-          new Product {Description = "", Name = "Spaceballs, the scooter", Reviews = new Review[0] },
+          new Product {Description = "Gets you clean", Name = "Spaceballs, the soap", Reviews = new Review[0] },
+          new Product {Description = "Wheels you around", Name = "Spaceballs, the scooter", Reviews = new Review[0] },
       };
 
       foreach (var p in products)
@@ -101,12 +113,33 @@ namespace ReviewManagement.Models
       // These are products that were purchased, but no review was given
       var customerProductJoinTable = new CustomerProduct[]
       {
-          new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[2]},
-          new CustomerProduct{CustomerId = vespa.CustomerId, Product = products[2]},
+          new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[8]},
+          new CustomerProduct{CustomerId = vespa.CustomerId, Product = products[9]},
+          new CustomerProduct{CustomerId = valium.CustomerId, Product = products[10]},
+          new CustomerProduct{CustomerId = lonestar.CustomerId, Product = products[11]},
+          new CustomerProduct{CustomerId = barf.CustomerId, Product = products[12]},
+          new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[9]},
+          new CustomerProduct{CustomerId = vespa.CustomerId, Product = products[10]},
+          new CustomerProduct{CustomerId = valium.CustomerId, Product = products[11]},
+          new CustomerProduct{CustomerId = lonestar.CustomerId, Product = products[13]},
+          new CustomerProduct{CustomerId = barf.CustomerId, Product = products[8]},
+          new CustomerProduct{CustomerId = darkHelmet.CustomerId, Product = products[10]},
+          new CustomerProduct{CustomerId = vespa.CustomerId, Product = products[11]},
+          new CustomerProduct{CustomerId = valium.CustomerId, Product = products[12]},
+          new CustomerProduct{CustomerId = lonestar.CustomerId, Product = products[8]},
+          new CustomerProduct{CustomerId = barf.CustomerId, Product = products[9]},
       };
       foreach (var cp in customerProductJoinTable)
       {
-        context.CustomerProduct.Add(cp);
+        try
+        {
+          context.CustomerProduct.Add(cp);
+        }
+        catch (InvalidOperationException)
+        {
+          Console.WriteLine($"Looks like you are trying to add someone who already has a review: CustomerId {cp.CustomerId}.");
+          throw;
+        }
       }
 
       context.SaveChanges();
