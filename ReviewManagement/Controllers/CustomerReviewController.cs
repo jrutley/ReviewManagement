@@ -33,7 +33,7 @@ namespace ReviewManagement.Controllers
     {
       var customer = _repository.GetFullyLoadedCustomer(email);
 
-      if (customer == null) return Ok(new List<CustomerViewDTO>());
+      if (customer == null) return Ok(new CustomerViewDTOWrapper());
       var productMapping = customer
           .Products
           .Select(cp => cp.Product)
