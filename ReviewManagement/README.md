@@ -10,33 +10,34 @@ Commands to get up and running:
 
 If using Visual Studio 2017
 
-1. double-click the VSDebug.bat file, then load the sln and click Start
+1) double-click the VSDebug.bat file
+
+2) load the sln
+
+3) click Start
 
 OR
 
-If running from the console
-
-1.
- a. If running from the console from Windows, run
-
-    VSDebug.bat
+1) If running from the console
 
 
- b. If running from the console from Mac or Linux, run 
+* From Windows, run
 
-    npm install
+        VSDebug.bat
 
-    webpack --config webpack.config.js
 
-    webpack --config webpack.config.vendor.js
+* From Mac or Linux, run 
 
-    dotnet restore
+        npm install
+        webpack --config webpack.config.js
+		webpack --config webpack.config.vendor.js
+		dotnet restore
 
-2. Set mode to Development by setting the environment variable ASPNETCORE_ENVIRONMENT=Development
+2) Set mode to Development by setting the environment variable ASPNETCORE_ENVIRONMENT=Development
 
-3. The following command will start the website:
+3) The following command will start the website:
 
-dotnet run
+        dotnet run
 
 #### Stuff left to do:
 
