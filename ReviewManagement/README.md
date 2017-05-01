@@ -1,11 +1,5 @@
 ### Review Management
 
-This application allows a vendor to manage reviews for their products. It is not a production-quality application.
-
-Requirements: 
-+ Node.js v6 or higher
-+ .NET Core runtime
-
 Commands to get up and running:
 
 If using Visual Studio 2017
