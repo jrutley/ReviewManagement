@@ -1,26 +1,22 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ReviewManagement.Controllers;
 using ReviewManagement.Controllers.ViewModels;
-using ReviewManagement.Models;
 using Xunit;
+using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace ReviewManagement.Test
 {
   public class CustomerReviewControllerShould
   {
     private readonly CustomerReviewController _controller;
-    private ProductContext _dbContext;
 
     public CustomerReviewControllerShould()
     {
-      var optionsBuilder = new DbContextOptionsBuilder<ProductContext>();
-      optionsBuilder.UseInMemoryDatabase();
-      _dbContext = new ProductContext(optionsBuilder.Options);
-      _dbContext.Customers.Add(new Customer { Name = "Dark Helmet", Email = "helmet@spaceballs.com" });
+     var customerProductRepository = new Mock<ICustomerProductRepository>();
 
-      _controller = new CustomerReviewController(_dbContext);
+      _controller = new CustomerReviewController(customerProductRepository.Object, new Mock<ILogger<CustomerReviewController>>().Object);
     }
 
     [Fact]
