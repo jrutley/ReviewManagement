@@ -34,31 +34,31 @@ namespace ReviewManagement.Test
     [Fact]
     public void ReturnNoDataIfCustomerHasNoReviews()
     {
-        var customerName = "lonestar@lonestar.com";
-            var customer = new Customer { Email = customerName, Name = "Lone Star", Products = new List<CustomerProduct>() };
-            _customerProductRepository.Setup(cpr => cpr.GetFullyLoadedCustomer(customerName)).Returns(customer);
-        var call = _controller.MyProductsAndReviews(customerName);
-        var okResult = Assert.IsType<OkObjectResult>(call);
-        var reviews = okResult.Value as CustomerViewDTOWrapper;
-        Assert.Empty(reviews.Data);
+      var customerName = "lonestar@lonestar.com";
+      var customer = new Customer { Email = customerName, Name = "Lone Star", Products = new List<CustomerProduct>() };
+      _customerProductRepository.Setup(cpr => cpr.GetFullyLoadedCustomer(customerName)).Returns(customer);
+      var call = _controller.MyProductsAndReviews(customerName);
+      var okResult = Assert.IsType<OkObjectResult>(call);
+      var reviews = okResult.Value as CustomerViewDTOWrapper;
+      Assert.Empty(reviews.Data);
     }
 
-        [Fact]
-        public void ReturnProductIfCustomerHasReviewedAProduct()
-        {
-            var customerName = "lonestar@lonestar.com";
-            var productName = "Spaceballs, the underwear";
+    [Fact]
+    public void ReturnProductIfCustomerHasReviewedAProduct()
+    {
+      var customerName = "lonestar@lonestar.com";
+      var productName = "Spaceballs, the underwear";
 
-            var product = new Product { Name = productName, Reviews = new List<Review>() };
-            var customer = new Customer { Email = customerName, Name = "Lone Star"};
-            customer.Products = new List<CustomerProduct> { new CustomerProduct { Product = product, ProductId = product.ProductId, Customer = customer, CustomerId = customer.CustomerId} };
-            _customerProductRepository.Setup(cpr => cpr.GetFullyLoadedCustomer(customerName)).Returns(customer);
-            var call = _controller.MyProductsAndReviews(customerName);
-            var okResult = Assert.IsType<OkObjectResult>(call);
-            var reviews = okResult.Value as CustomerViewDTOWrapper;
+      var product = new Product { Name = productName, Reviews = new List<Review>() };
+      var customer = new Customer { Email = customerName, Name = "Lone Star"};
+      customer.Products = new List<CustomerProduct> { new CustomerProduct { Product = product, ProductId = product.ProductId, Customer = customer, CustomerId = customer.CustomerId} };
+      _customerProductRepository.Setup(cpr => cpr.GetFullyLoadedCustomer(customerName)).Returns(customer);
+      var call = _controller.MyProductsAndReviews(customerName);
+      var okResult = Assert.IsType<OkObjectResult>(call);
+      var reviews = okResult.Value as CustomerViewDTOWrapper;
 
-            Assert.Same(reviews.Data.First().Product.Name, productName);
-        }
+      Assert.Same(reviews.Data.First().Product.Name, productName);
     }
+  }
 }
 
