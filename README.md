@@ -26,17 +26,15 @@ OR
 
         VSDebug.bat
 
-
 * From Mac or Linux, run 
 
         npm install
         webpack --config webpack.config.js
 		webpack --config webpack.config.vendor.js
 		dotnet restore
+		export ASPNETCORE_ENVIRONMENT=Development
 
-2) Set mode to Development by setting the environment variable ASPNETCORE_ENVIRONMENT=Development
-
-3) The following command will start the website:
+2) The following command will start the website:
 
         dotnet run
 
@@ -59,7 +57,7 @@ Service and Web tests:
 Open a console to the ReviewManagement folder and type
 		npm test
 
-This will set up a continual 
+This will set up a hot loaded test environment
 
 #### Stuff left to do:
 
