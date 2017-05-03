@@ -21,7 +21,9 @@ namespace ReviewManagement.Models
       var hours = random.Next(0, 23) * -1;
       var minutes = random.Next(0, 59) * -1;
       var seconds = random.Next(0, 59) * -1;
-      return new DateTimeOffset(DateTime.Now.Add(new TimeSpan(days, hours, minutes, seconds)), edt);
+      var now = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
+      var newOffset = new DateTimeOffset(now, edt);
+      return newOffset.Add(new TimeSpan(days, hours, minutes, seconds));
     }
 
     public static void Initialize(ProductContext context)
