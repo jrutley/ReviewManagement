@@ -60,7 +60,7 @@ This will set up a hot loaded test environment
 
 #### Stuff left to do:
 
-- Make the CSS prettier on the customer page
+- New reviews should use the current date
 - Add more tests on front end  
 - Add more tests on back end  
 - Add Customer ability to edit a review to a product

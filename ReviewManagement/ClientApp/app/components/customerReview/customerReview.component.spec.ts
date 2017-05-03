@@ -46,8 +46,8 @@ describe('customer review', () => {
   });
 
   it('should display the product name', () => {
-    const span = fixture.debugElement.query(By.css('span'));
-    expect(span.nativeElement.textContent).toContain("Spaceballs the video tape");
+    const div = fixture.debugElement.query(By.css('div'));
+    expect(div.nativeElement.textContent).toContain("Spaceballs the video tape");
   });
 
   describe('with existing review', () => {
@@ -56,13 +56,13 @@ describe('customer review', () => {
       fixture.detectChanges();
     });
     it('should display the review', () => {
-      const spans = fixture.debugElement.queryAll(By.css('span'));
-      expect(spans[1].nativeElement.textContent).toContain("Nice and smooth");
+      const divs = fixture.debugElement.queryAll(By.css('div'));
+      expect(divs[0].nativeElement.textContent).toContain("Nice and smooth");
     });
 
     it('should not display an Add Review button', () => {
-      const divs = fixture.debugElement.queryAll(By.css('div'));
-      expect(divs.length).toBe(0);
+      const buttons = fixture.debugElement.queryAll(By.css('button'));
+      expect(buttons.length).toBe(0);
     });
   })
 

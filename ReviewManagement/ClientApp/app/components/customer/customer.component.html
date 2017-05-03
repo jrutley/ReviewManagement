@@ -16,11 +16,15 @@
     <div id="selectAProduct">User {{email.value}}, select a product to review:</div>
     <div id="productViewModel" *ngIf="productsViewModel">
       <div id="noProducts" *ngIf="matchingEmail && productsViewModel.length === 0">Uh oh, it looks like you don't have any products!</div>
-      <ul *ngIf="productsViewModel.length > 0">
-        <li *ngFor="let product of productsViewModel" class="customer-product">
+      <div *ngIf="productsViewModel.length > 0" class="container">
+        <h4 class="col-xs-4">My Purchased Products</h4>
+        <h4 class="col-xs-8">My Reviews</h4>
+        <hr>
+        <div *ngFor="let product of productsViewModel" class="customer-product">
+          <hr>
           <cus-review [product]="product" [customerEmail]="email.value"></cus-review>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
