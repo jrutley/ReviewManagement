@@ -6,20 +6,23 @@ Requirements:
 + Node.js v6 or higher
 + .NET Core runtime
 
-
 Commands to get up and running:
 
 If using Visual Studio 2017
 
-1) double-click the VSDebug.bat file
+1) Change to the ReviewManagement subfolder
 
-2) load the sln
+2) double-click the VSDebug.bat file
 
-3) click Start
+3) load the sln
+
+4) click Start
 
 OR
 
-1) If running from the console
+If running from the console
+
+1) Change to the ReviewManagement subfolder
 
 
 * From Windows, run
@@ -28,11 +31,7 @@ OR
 
 * From Mac or Linux, run 
 
-        npm install
-        webpack --config webpack.config.js
-		webpack --config webpack.config.vendor.js
-		dotnet restore
-		export ASPNETCORE_ENVIRONMENT=Development
+		sh VSDebug.sh
 
 2) The following command will start the website:
 
