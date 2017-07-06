@@ -10,7 +10,7 @@ import { ProductViewModel } from './product.viewmodel';
 import { CustomerProductService } from '../../services/customer-product.service';
 import { Observable } from 'rxjs';
 
-const mockProduct = [{ id: 1, name: "Mock 1", review: "Sucks!" }, { id: 2, name: "Mock 2", review: "Awesome!" }, { id: 3, name: "No review" }];
+const mockProduct = [{ id: 1, name: "Mock 1", review: "Sucks!" }, { id: 2, name: "Mock 2", review: "Awesome!" }, { id: 3, name: "No review", review: "" }];
 
 class MockCustomerProductService {
     data;
