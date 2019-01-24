@@ -8,7 +8,8 @@ namespace ReviewManagement.Controllers
 {
 
   [Route("api/[controller]")]
-  public class ReviewController : Controller
+  [ApiController]
+  public class ReviewController : ControllerBase
   {
     private readonly ILogger<ReviewController> _logger;
     private IReviewRepository _repository;
@@ -20,8 +21,8 @@ namespace ReviewManagement.Controllers
     }
 
 
-    [HttpGet("[action]")]
-    public IActionResult AllReviews()
+    [HttpGet]
+    public ActionResult<IEnumerable<ReviewsDTO>> AllReviews()
     {
       var productsAndReviews = _repository.GetProductsWithAllReviews();
       var customers = _repository.GetCustomers().ToDictionary(id => id.CustomerId);
@@ -44,8 +45,7 @@ namespace ReviewManagement.Controllers
         }
       }
 
-      var wrapped = new ReviewDTOWrapper { Data = reviews };
-      return Ok(wrapped);
+      return Ok(reviews);
     }
   }
 }

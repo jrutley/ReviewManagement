@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ReviewManagement.Controllers
 {
-
   [Route("api/[controller]")]
-  public class CustomerReviewController : Controller
+  [ApiController]
+  public class CustomerReviewController : ControllerBase
   {
     private readonly ILogger<CustomerReviewController> _logger;
     private ICustomerProductRepository _repository;
@@ -21,31 +21,29 @@ namespace ReviewManagement.Controllers
 
 
     [HttpGet("[action]")]
-    public IActionResult GetEmails()
+    public ActionResult<IEnumerable<string>> GetEmails()
     {
-      var wrapped = new CustomersDTOWrapper { Data = _repository.GetCustomerEmails() };
-      return Ok(wrapped);
+      return Ok(_repository.GetCustomerEmails());
     }
 
 
     [HttpGet("[action]")]
-    public IActionResult MyProductsAndReviews([FromQuery] string email) // Don't do this in a real app!
+    public ActionResult<IEnumerable<CustomerViewDTO>> MyProductsAndReviews([FromQuery] string email) // Don't do this in a real app!
     {
       var customer = _repository.GetFullyLoadedCustomer(email);
 
-      if (customer == null) return Ok(new CustomerViewDTOWrapper());
+      if (customer == null) return Ok(new List<CustomerViewDTO>());
       var productMapping = customer
           .Products
           .Select(cp => cp.Product)
           .Select(product =>
              new CustomerViewDTO { Product = product, Review = product.Reviews.SingleOrDefault(r => r.CustomerId == customer.CustomerId) }).ToList();
       // Need to wrap this with a data property
-      var wrapped = new CustomerViewDTOWrapper { Data = productMapping };
-      return Ok(wrapped);
+      return Ok(productMapping);
     }
 
-    [HttpPost("[action]")]
-    public IActionResult MakeReview([FromBody] ReviewFromCustomerDTO review)
+    [HttpPost]
+    public ActionResult MakeReview([FromBody] ReviewFromCustomerDTO review)
     {
       _logger.LogInformation($"Make Review called with <{review.CustomerEmail}> <{review.ProductId}> <{review.Review}>");
       // SQL update here
@@ -59,7 +57,7 @@ namespace ReviewManagement.Controllers
         return StatusCode(500, "Customer Email not found");
       }
 
-      return Ok(review);
+      return Ok();
     }
   }
 }
