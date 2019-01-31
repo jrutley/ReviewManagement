@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ReviewManagement.Controllers.ViewModels;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace ReviewManagement.Controllers
 {
@@ -23,7 +24,7 @@ namespace ReviewManagement.Controllers
     [HttpGet("[action]")]
     public ActionResult<IEnumerable<string>> GetEmails()
     {
-      return Ok(_repository.GetCustomerEmails());
+      return _repository.GetCustomerEmails().ToList();
     }
 
 
@@ -32,14 +33,13 @@ namespace ReviewManagement.Controllers
     {
       var customer = _repository.GetFullyLoadedCustomer(email);
 
-      if (customer == null) return Ok(new List<CustomerViewDTO>());
+      if (customer == null) {Console.WriteLine("Returning empty list"); return Ok(null);}
       var productMapping = customer
           .Products
           .Select(cp => cp.Product)
           .Select(product =>
              new CustomerViewDTO { Product = product, Review = product.Reviews.SingleOrDefault(r => r.CustomerId == customer.CustomerId) }).ToList();
-      // Need to wrap this with a data property
-      return Ok(productMapping);
+      return productMapping;
     }
 
     [HttpPost]

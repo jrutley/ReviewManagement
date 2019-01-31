@@ -7,6 +7,7 @@ using Moq;
 using Microsoft.Extensions.Logging;
 using ReviewManagement.Models;
 using System.Linq;
+using System;
 
 namespace ReviewManagement.Test
 {
@@ -25,10 +26,9 @@ namespace ReviewManagement.Test
     [Fact]
     public void ReturnEmptyIfNotFound()
     {
-      var call = _controller.MyProductsAndReviews("lonestar@lonestar.com");
-      var okResult = Assert.IsType<OkObjectResult>(call);
-      var reviews = okResult.Value as CustomerViewDTOWrapper;
-      Assert.Null(reviews.Data);
+            var call = _controller.MyProductsAndReviews("lonestar@lonestar.com");
+
+            Assert.Null(call.Value);
     }
 
     [Fact]
@@ -38,9 +38,7 @@ namespace ReviewManagement.Test
       var customer = new Customer { Email = customerName, Name = "Lone Star", Products = new List<CustomerProduct>() };
       _customerProductRepository.Setup(cpr => cpr.GetFullyLoadedCustomer(customerName)).Returns(customer);
       var call = _controller.MyProductsAndReviews(customerName);
-      var okResult = Assert.IsType<OkObjectResult>(call);
-      var reviews = okResult.Value as CustomerViewDTOWrapper;
-      Assert.Empty(reviews.Data);
+      Assert.Empty(call.Value);
     }
 
     [Fact]
@@ -53,11 +51,8 @@ namespace ReviewManagement.Test
       var customer = new Customer { Email = customerName, Name = "Lone Star"};
       customer.Products = new List<CustomerProduct> { new CustomerProduct { Product = product, ProductId = product.ProductId, Customer = customer, CustomerId = customer.CustomerId} };
       _customerProductRepository.Setup(cpr => cpr.GetFullyLoadedCustomer(customerName)).Returns(customer);
-      var call = _controller.MyProductsAndReviews(customerName);
-      var okResult = Assert.IsType<OkObjectResult>(call);
-      var reviews = okResult.Value as CustomerViewDTOWrapper;
-
-      Assert.Same(reviews.Data.First().Product.Name, productName);
+            var call = _controller.MyProductsAndReviews(customerName);
+            Assert.Same(call.Value.First().Product.Name, productName);
     }
   }
 }
