@@ -10,6 +10,7 @@ export class ReviewManagerComponent {
     sortBy = 'dateFormatted';
     sortOrder = 'desc';
     rowsOnPage = 10;
+    displayedColumns = ['customerEmail', 'product', 'datetime', 'stars', 'comments', 'state']
 
     public reviews;
 

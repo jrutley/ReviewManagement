@@ -45,7 +45,7 @@ namespace ReviewManagement.Controllers
         }
       }
 
-      return Ok(reviews);
+      return reviews;
     }
   }
 }

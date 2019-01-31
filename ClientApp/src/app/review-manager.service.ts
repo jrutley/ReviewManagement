@@ -5,8 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ReviewService {
-  private rootUrl = 'api/Review/';
-  private makeReviewUrl = this.rootUrl + 'AllReviews';
+  private rootUrl = 'api/review/';
 
   reviews: Observable<Review[]>;
 
@@ -14,6 +13,6 @@ export class ReviewService {
 
   getReviews(): Observable<Review[]> {
     return this.http
-      .get<Review[]>(this.makeReviewUrl);
+      .get<Review[]>(this.rootUrl);
   }
 }

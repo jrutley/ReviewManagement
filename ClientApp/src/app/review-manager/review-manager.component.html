@@ -27,8 +27,10 @@
     <mat-header-cell *matHeaderCellDef>State</mat-header-cell>
     <mat-cell *matCellDef="let item">{{item.state}}</mat-cell>
   </ng-container>
-  Need to add paginator here
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+Need to add paginator here
 <!--
 <table class="table table-striped" *ngIf="reviews" #mf="mfDataTable" [mfData]="reviews" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
     [(mfSortOrder)]="sortOrder">
