@@ -1,36 +1,41 @@
-<h1>Review Management</h1>
+<h1>Reviews</h1>
 
-<p *ngIf="!reviews"><em>Loading...</em></p>
-
-<table mat-table [dataSource]="reviews">
-  <ng-container matColumnDef="customerEmail">
-    <mat-header-cell *matHeaderCellDef>Customer</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{item.customerEmail}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="product">
-    <mat-header-cell *matHeaderCellDef>Product</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{item.product}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="datetime">
-    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{item.dateTime}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="stars">
-    <mat-header-cell *matHeaderCellDef>Stars</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{item.stars}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="comments">
-    <mat-header-cell *matHeaderCellDef>Comments</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{item.comments}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="state">
-    <mat-header-cell *matHeaderCellDef>State</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{item.state}}</mat-cell>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-Need to add paginator here
+<div class="mat-elevation-z8">
+  <div class="loading-shade">
+    <p *ngIf="!reviews"><em>Loading...</em></p>
+  </div>
+  <div class="table-container">
+    <table mat-table [dataSource]="reviews">
+      <ng-container matColumnDef="customerEmail">
+        <mat-header-cell *matHeaderCellDef>Customer</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.customerEmail}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="product">
+        <mat-header-cell *matHeaderCellDef>Product</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.product}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="datetime">
+        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.dateTime}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stars">
+        <mat-header-cell *matHeaderCellDef>Stars</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.stars}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="comments">
+        <mat-header-cell *matHeaderCellDef>Comments</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.comments}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef>State</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.state}}</mat-cell>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  Need to add paginator here
+</div>
 <!--
 <table class="table table-striped" *ngIf="reviews" #mf="mfDataTable" [mfData]="reviews" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
     [(mfSortOrder)]="sortOrder">
