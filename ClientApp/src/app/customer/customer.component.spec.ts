@@ -7,10 +7,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CustomerComponent } from './customer.component';
 import { CustomerReviewComponent } from '../customerReview/customer-review.component';
 import { ProductViewModel } from './product.viewmodel';
-import { CustomerProductService } from '../../services/customer-product.service';
-import { Observable } from 'rxjs';
+import { CustomerProductService } from '../customer-product.service';
 
-const mockProduct = [{ id: 1, name: "Mock 1", review: "Sucks!" }, { id: 2, name: "Mock 2", review: "Awesome!" }, { id: 3, name: "No review", review: "" }];
+const mockProduct = [
+  { id: 1, name: 'Mock 1', review: 'Sucks!' },
+  { id: 2, name: 'Mock 2', review: 'Awesome!' },
+  { id: 3, name: 'No review', review: '' }];
 
 class MockCustomerProductService {
     data;
@@ -40,12 +42,6 @@ describe('Customer component', () => {
     let de: DebugElement;
     let el: HTMLInputElement;
 
-    beforeAll(() => {
-        // Monkey-patch Observable.debounceTime() since it is using
-        // setInterval() internally which not allowed within async zone
-        Observable.prototype.debounceTime = function () { return this; };
-    });
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -57,21 +53,22 @@ describe('Customer component', () => {
                 FormsModule
             ]
         })
+        .compileComponents();
             // Override component's own provider
-            .overrideComponent(CustomerComponent, {
-                set: {
-                    providers: [
-                        { provide: CustomerProductService, useClass: MockCustomerProductService }
-                    ]
-                }
-            })
-            .overrideComponent(CustomerReviewComponent, {
-                set: {
-                    providers: [
-                        { provide: CustomerProductService, useClass: MockCustomerProductService }
-                    ]
-                }
-            });
+            // .overrideComponent(CustomerComponent, {
+            //     set: {
+            //         providers: [
+            //             { provide: CustomerProductService, useClass: MockCustomerProductService }
+            //         ]
+            //     }
+            // })
+            // .overrideComponent(CustomerReviewComponent, {
+            //     set: {
+            //         providers: [
+            //             { provide: CustomerProductService, useClass: MockCustomerProductService }
+            //         ]
+            //     }
+            // });
     }));
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomerComponent);
@@ -111,7 +108,7 @@ describe('Customer component', () => {
         beforeEach(fakeAsync(() => {
             de = fixture.debugElement.query(By.css('input'));
             el = de.nativeElement;
-            el.value = "Hi";
+            el.value = 'Hi';
             el.dispatchEvent(new Event('input'));
             tick();
             fixture.detectChanges();
@@ -125,9 +122,9 @@ describe('Customer component', () => {
         });
         describe('and email is not found', () => {
             it('should not try to load products', () => {
-                console.log("TO REVIEW:");
+                console.log('TO REVIEW:');
                 console.log(productToReview);
-                console.log("VIEWMODEL:");
+                console.log('VIEWMODEL:');
                 console.log(productViewModel);
             })
         });
