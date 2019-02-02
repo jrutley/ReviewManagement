@@ -48,7 +48,7 @@ class ReviewServiceStub {
         state: 'Reviewed',
         product: 'Item 4'
       }
-    ])
+    ]);
   }
 
   then(callback) {

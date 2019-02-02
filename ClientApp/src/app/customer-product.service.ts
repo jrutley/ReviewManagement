@@ -1,5 +1,4 @@
 import { ProductViewModel } from './customer/product.viewmodel';
-import { Product } from './models/product.model';
 import { CustomerViewDTO } from './models/review.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -20,9 +19,7 @@ export class CustomerProductService {
     }
 
     makeReview(review: string, productId: number, customerEmail: string) {
-        return this.http.post(this.makeReviewUrl, { productId: productId, customerEmail: customerEmail, review: review })
-            .toPromise()
-            .catch(this.handleError);
+        return this.http.post(this.makeReviewUrl, { productId: productId, customerEmail: customerEmail, review: review });
     }
 
     getProducts(email: string): Observable<ProductViewModel[]> {

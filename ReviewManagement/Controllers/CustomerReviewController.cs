@@ -42,7 +42,7 @@ namespace ReviewManagement.Controllers
       return productMapping;
     }
 
-    [HttpPost]
+    [HttpPost("[action]")]
     public ActionResult MakeReview([FromBody] ReviewFromCustomerDTO review)
     {
       _logger.LogInformation($"Make Review called with <{review.CustomerEmail}> <{review.ProductId}> <{review.Review}>");

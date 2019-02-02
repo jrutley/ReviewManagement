@@ -1,19 +1,18 @@
 import { TestBed, async, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { CustomerReviewComponent } from './customer-review.component';
-import { ProductViewModel } from '../customer/product.viewmodel';
 import { CustomerProductService } from '../customer-product.service';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 class MockCustomerReviewService {
   then(callback) {
     callback();
     return this;
   }
-  makeReview(reviewText, productId, customerEmail) { return this; }
+  makeReview(reviewText, productId, customerEmail) {
+    return of(this); }
 }
 
 describe('customer review', () => {

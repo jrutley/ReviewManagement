@@ -22,10 +22,11 @@ export class CustomerReviewComponent {
   }
 
   onSubmit() {
-    console.log(this.reviewText.value);
     this.productService.makeReview(this.reviewText.value, this.product.id, this.customerEmail)
-      .then(() => {
+      .subscribe(() => {
         this.product.review = this.reviewText.value;
-      });
+      },
+        e => console.log(`Error: ${e}`)
+      );
   }
 }

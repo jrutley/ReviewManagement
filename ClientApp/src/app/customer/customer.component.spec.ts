@@ -6,8 +6,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CustomerComponent } from './customer.component';
 import { CustomerReviewComponent } from '../customerReview/customer-review.component';
-import { ProductViewModel } from './product.viewmodel';
 import { CustomerProductService } from '../customer-product.service';
+import { of } from 'rxjs';
 
 const mockProduct = [
   { id: 1, name: 'Mock 1', review: 'Sucks!' },
@@ -18,12 +18,11 @@ class MockCustomerProductService {
     data;
     error;
 
-    getProducts(st: string): Promise<ProductViewModel[]> {
-        return Promise.resolve(mockProduct);
-    };
+    getProducts() { // (st: string)
+        return of(mockProduct);
+    }
     getAllEmails() {
-        this.data = ['email@email.com'];
-        return this;
+        return of(['email@email.com']);
     }
     then(callback) {
         if (!this.error) {
@@ -39,8 +38,6 @@ class MockCustomerProductService {
 describe('Customer component', () => {
     let fixture: ComponentFixture<CustomerComponent>;
     let comp: CustomerComponent;
-    let de: DebugElement;
-    let el: HTMLInputElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -53,22 +50,21 @@ describe('Customer component', () => {
                 FormsModule
             ]
         })
-        .compileComponents();
             // Override component's own provider
-            // .overrideComponent(CustomerComponent, {
-            //     set: {
-            //         providers: [
-            //             { provide: CustomerProductService, useClass: MockCustomerProductService }
-            //         ]
-            //     }
-            // })
-            // .overrideComponent(CustomerReviewComponent, {
-            //     set: {
-            //         providers: [
-            //             { provide: CustomerProductService, useClass: MockCustomerProductService }
-            //         ]
-            //     }
-            // });
+            .overrideComponent(CustomerComponent, {
+                set: {
+                    providers: [
+                        { provide: CustomerProductService, useClass: MockCustomerProductService }
+                    ]
+                }
+            })
+            .overrideComponent(CustomerReviewComponent, {
+                set: {
+                    providers: [
+                        { provide: CustomerProductService, useClass: MockCustomerProductService }
+                    ]
+                }
+            });
     }));
     beforeEach(() => {
         fixture = TestBed.createComponent(CustomerComponent);
@@ -82,10 +78,10 @@ describe('Customer component', () => {
     });
 
     it('should bind the input to the correct property', () => {
-        let input = fixture.debugElement.query(By.css('input'));
-        let inputElement = input.nativeElement;
+        const input = fixture.debugElement.query(By.css('input'));
+        const inputElement = input.nativeElement;
 
-        //set input value
+        // set input value
         inputElement.value = 'test value';
         inputElement.dispatchEvent(new Event('input'));
 
@@ -94,10 +90,10 @@ describe('Customer component', () => {
 
     describe('on page load', () => {
         it('getAllEmails is called', () => {
-            let emails = fixture.componentInstance.emails;
-            expect(emails[0]).toBe('email@email.com')
+            const emails = fixture.componentInstance.emails;
+            expect(emails[0]).toBe('email@email.com');
         });
-    })
+    });
 
     describe('after email is entered', () => {
         let de: DebugElement;
@@ -108,9 +104,9 @@ describe('Customer component', () => {
         beforeEach(fakeAsync(() => {
             de = fixture.debugElement.query(By.css('input'));
             el = de.nativeElement;
-            el.value = 'Hi';
+            el.value = 'test@email.com';
             el.dispatchEvent(new Event('input'));
-            tick();
+            tick(500);
             fixture.detectChanges();
 
             productToReview = fixture.debugElement.query(By.css('#selectAProduct'));
@@ -121,12 +117,15 @@ describe('Customer component', () => {
 
         });
         describe('and email is not found', () => {
-            it('should not try to load products', () => {
-                console.log('TO REVIEW:');
-                console.log(productToReview);
-                console.log('VIEWMODEL:');
-                console.log(productViewModel);
-            })
-        });
+          // Not very BDD but this needs to be false before we can do anything else
+          it('matchingEmail is false', () => {
+            expect(comp.matchingEmail).toBe(false);
+
+          });
+          it('should display that email is not found', () => {
+          });
+          it('should not try to load products', () => {
+          });
+      });
     });
 });
