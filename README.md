@@ -6,38 +6,18 @@ Requirements:
 + Node.js v6 or higher
 + .NET Core 2.2 runtime
 
-Commands to get up and running:
-
-If using Visual Studio 2017 (no guarantees.. this is written on a Mac)
+Commands to get up and running from console:
 
 1) Change to the ReviewManagement subfolder
 
-2) double-click the VSDebug.bat file
-
-3) load the sln
-
-4) click Start
-
-OR
-
-If running from the console
-
-1) Change to the ReviewManagement subfolder
-
-
-* From Windows, run
-
-        VSDebug.bat
-
-* From Mac or Linux, run
-
-		sh VSDebug.sh
-
-2) The following command will start the website:
-
+2) Start the backend with
         dotnet run
 
-For development purposes, this employs hot reload, so that we don't need to continually rebuild.
+This will automatically populate a SQLite DB
+
+3) From a new console, cd into the ClientApp folder and run
+        npm install
+        npm start
 
 ##### Testing
 
