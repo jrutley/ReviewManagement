@@ -1,81 +1,36 @@
 <h1>Reviews</h1>
 
-<div class="mat-elevation-z8">
   <div class="loading-shade">
     <p *ngIf="!reviews"><em>Loading...</em></p>
   </div>
   <div class="table-container">
-    <table mat-table [dataSource]="reviews">
+    <table mat-table [dataSource]="reviews" class="mat-elevation-z8">
       <ng-container matColumnDef="customerEmail">
-        <mat-header-cell *matHeaderCellDef>Customer</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.customerEmail}}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Customer</th>
+        <td mat-cell *matCellDef="let item">{{item.customerEmail}}</td>
       </ng-container>
       <ng-container matColumnDef="product">
-        <mat-header-cell *matHeaderCellDef>Product</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.product}}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Product</th>
+        <td mat-cell *matCellDef="let item">{{item.product}}</td>
       </ng-container>
       <ng-container matColumnDef="datetime">
-        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.dateTime}}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let item">{{item.dateTime}}</td>
       </ng-container>
       <ng-container matColumnDef="stars">
-        <mat-header-cell *matHeaderCellDef>Stars</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.stars}}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Stars</th>
+        <td mat-cell *matCellDef="let item">{{item.stars}}</td>
       </ng-container>
       <ng-container matColumnDef="comments">
-        <mat-header-cell *matHeaderCellDef>Comments</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.comments}}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>Comments</th>
+        <td mat-cell *matCellDef="let item">{{item.comments}}</td>
       </ng-container>
       <ng-container matColumnDef="state">
-        <mat-header-cell *matHeaderCellDef>State</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.state}}</mat-cell>
+        <th mat-header-cell *matHeaderCellDef>State</th>
+        <td mat-cell *matCellDef="let item">{{item.state}}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
   Need to add paginator here
-</div>
-<!--
-<table class="table table-striped" *ngIf="reviews" #mf="mfDataTable" [mfData]="reviews" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy"
-    [(mfSortOrder)]="sortOrder">
-    <thead>
-        <tr>
-            <th>
-                <mfDefaultSorter by="customerEmail">Customer</mfDefaultSorter>
-            </th>
-            <th>
-                <mfDefaultSorter by="product">Product</mfDefaultSorter>
-            </th>
-            <th>
-                <mfDefaultSorter by="datetime">Date</mfDefaultSorter>
-            </th>
-            <th>
-                <mfDefaultSorter by="stars">Rating</mfDefaultSorter>
-            </th>
-            <th>
-                <mfDefaultSorter by="comments">Summary</mfDefaultSorter>
-            </th>
-            <th>
-                <mfDefaultSorter by="state">State</mfDefaultSorter>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of mf.data">
-            <td>{{item.customerEmail}}</td>
-            <td>{{item.product}}</td>
-            <td>{{item.dateTime}}</td>
-            <td class="text-right">{{item.stars}}</td>
-            <td>{{item.comments}}</td>
-            <td>{{item.state | uppercase}}</td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4">
-                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-            </td>
-        </tr>
-    </tfoot>
-</table>-->
